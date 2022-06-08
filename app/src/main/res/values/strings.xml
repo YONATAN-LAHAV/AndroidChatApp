@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">WhatsApp</string>
+    <string name="etUsername">Username</string>
+    <string name="etPassword">Password</string>
+    <string name="btnToRegister">To Register !</string>
+    <string name="btnLogin">Login</string>
+    <string name="tvLoginTitle">ChatApp Login</string>
+    <string name="etVerPassword">Verify Password</string>
+    <string name="etNickname">Nickname</string>
+    <string name="btnRegister">Register</string>
+    <string name="btnToLogin">To Login !</string>
+    <string name="tvRegisterTitle">ChatApp Register</string>
+</resources>
