@@ -10,4 +10,7 @@
     <string name="btnRegister">Register</string>
     <string name="btnToLogin">To Login !</string>
     <string name="tvRegisterTitle">ChatApp Register</string>
+    <string name="to_login">To Login</string>
+    <string name="to_register">To Register</string>
+    <string name="to_contacts_list">To Contacts List</string>
 </resources>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.whatsapp.databinding.ActivityRegisterBinding;
+import com.example.whatsapp.entities.User;
 
 import java.util.List;
 

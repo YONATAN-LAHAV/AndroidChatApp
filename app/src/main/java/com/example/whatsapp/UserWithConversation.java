@@ -2,8 +2,10 @@ package com.example.whatsapp;
 
 import androidx.room.Embedded;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 import androidx.room.Relation;
+
+import com.example.whatsapp.entities.Conversation;
+import com.example.whatsapp.entities.User;
 
 import java.util.List;
 

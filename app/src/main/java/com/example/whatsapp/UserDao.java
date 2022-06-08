@@ -7,6 +7,8 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.example.whatsapp.entities.User;
+
 import java.util.List;
 
 @Dao

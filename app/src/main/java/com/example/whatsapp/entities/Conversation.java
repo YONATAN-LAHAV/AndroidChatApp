@@ -1,4 +1,4 @@
-package com.example.whatsapp;
+package com.example.whatsapp.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
