@@ -13,4 +13,8 @@
     <string name="to_login">To Login</string>
     <string name="to_register">To Register</string>
     <string name="to_contacts_list">To Contacts List</string>
+    <string name="very_long_string">hello world !hello world !hello world !hello world !hello world !hello world !hello world !hello world !hello world !hello world !hello world !hello world !hello world !hello world !hello world !hello world !</string>
+    <string name="time">Time</string>
+    <string name="name">Name</string>
+    <string name="to_chat_screen">To Chat Screen</string>
 </resources>

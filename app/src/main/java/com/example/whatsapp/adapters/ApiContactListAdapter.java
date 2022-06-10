@@ -14,7 +14,7 @@ import com.example.whatsapp.entities.ApiContact;
 
 import java.util.List;
 
-public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactsViewHolder> {
+public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAdapter.ContactsViewHolder> {
 
     private final LayoutInflater _layoutInflater;
     private List<ApiContact> _contacts;
@@ -23,7 +23,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         this._contacts = _contacts;
     }
 
-    public ContactsListAdapter(Context context) {
+    public ApiContactListAdapter(Context context) {
         _layoutInflater = LayoutInflater.from(context);
     }
 
