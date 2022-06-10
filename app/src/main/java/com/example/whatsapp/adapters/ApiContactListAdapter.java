@@ -11,20 +11,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsapp.R;
 import com.example.whatsapp.entities.ApiContact;
+import com.example.whatsapp.interfaces.ListItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAdapter.ContactsViewHolder> {
 
     private final LayoutInflater _layoutInflater;
     private List<ApiContact> _contacts;
+    final private ListItemClickListener _onClickListener;
 
     public void setContacts(List<ApiContact> _contacts) {
         this._contacts = _contacts;
     }
 
-    public ApiContactListAdapter(Context context) {
+    public ApiContactListAdapter(Context context, ListItemClickListener onClickListener) {
         _layoutInflater = LayoutInflater.from(context);
+        _onClickListener = onClickListener;
     }
 
 
@@ -52,7 +56,7 @@ public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAd
         return 0;
     }
 
-    class ContactsViewHolder extends RecyclerView.ViewHolder {
+    public class ContactsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView tvName;
         private final TextView tvLast;
@@ -63,6 +67,13 @@ public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAd
             tvName = itemView.findViewById(R.id.tvName);
             tvLast = itemView.findViewById(R.id.tvLast);
             tvLastDate = itemView.findViewById(R.id.tvLastDate);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            _onClickListener.onListItemClick(position);
         }
     }
 }
