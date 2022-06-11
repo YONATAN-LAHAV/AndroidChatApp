@@ -11,6 +11,7 @@ public class Conversation {
     private int id;
     private String UserId;
 
+
     public int getId() {
         return id;
     }
