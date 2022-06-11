@@ -6,12 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.whatsapp.api.UserAPI;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        UserAPI userAPI = new UserAPI();
+        userAPI.get();
 
         Button btnToLoginScreen = findViewById(R.id.btnToLoginScreen);
         Button btnToRegisterScreen = findViewById(R.id.btnToRegisterScreen);
