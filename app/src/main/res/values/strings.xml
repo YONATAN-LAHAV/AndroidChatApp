@@ -17,4 +17,10 @@
     <string name="time">Time</string>
     <string name="name">Name</string>
     <string name="to_chat_screen">To Chat Screen</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="server">Server</string>
+    <string name="nickname">Nickname</string>
+    <string name="username">Username</string>
+    <string name="add_new_contact">Add New Contact</string>
+    <string name="to_add_contact_screen">To Add Contact Screen</string>
 </resources>
