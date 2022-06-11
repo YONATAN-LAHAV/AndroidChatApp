@@ -17,6 +17,7 @@
     <string name="time">Time</string>
     <string name="name">Name</string>
     <string name="to_chat_screen">To Chat Screen</string>
+    <string name="BaseUrl">"http://10.0.2.2:7182/api/"</string>
     <string name="add_contact">Add Contact</string>
     <string name="server">Server</string>
     <string name="nickname">Nickname</string>
