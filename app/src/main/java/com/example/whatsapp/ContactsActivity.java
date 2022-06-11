@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.whatsapp.adapters.ApiContactListAdapter;
+import com.example.whatsapp.entities.ApiContact;
 import com.example.whatsapp.interfaces.ListItemClickListener;
 import com.example.whatsapp.viewmodels.ApiContactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,23 +47,13 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         viewModel.get().observe(this, apiContacts -> {
             adapter.setContacts(apiContacts);
         });
-
-//        List<ApiContact> contacts = new ArrayList<>();
-//        contacts.add(new ApiContact("admin", "admin", "localhost", "Hey", "10:00"));
-//        contacts.add(new ApiContact("neta", "neta", "localhost", "Heeeeeeeeeee", "10:00"));
-//        contacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Hellooo", "10:00"));
-//        contacts.add(new ApiContact("admin", "admin", "localhost", "Hey", "10:00"));
-//        contacts.add(new ApiContact("neta", "neta", "localhost", "Heeeeeeeeeee", "10:00"));
-//        contacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Hellooo", "10:00"));
-//        contacts.add(new ApiContact("admin", "admin", "localhost", "Hey", "10:00"));
-//        contacts.add(new ApiContact("neta", "neta", "localhost", "Heeeeeeeeeee", "10:00"));
-//        contacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Hellooo", "10:00"));
-//        adapter.setContacts(contacts);
     }
 
     @Override
-    public void onListItemClick(int position) {
+    public void onListItemClick(ApiContact apiContact) {
         Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra("ContactUsername", apiContact.getId());
+        intent.putExtra("ContactName", apiContact.getName());
         startActivity(intent);
     }
 }

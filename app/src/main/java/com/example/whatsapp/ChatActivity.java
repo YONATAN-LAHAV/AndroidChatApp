@@ -25,7 +25,7 @@ public class ChatActivity extends AppCompatActivity {
 
         // RecycleView logic.
         RecyclerView lstApiMessages = findViewById(R.id.lstApiMessages);
-        final ApiMessageListAdapter adapter = new ApiMessageListAdapter(this);
+        final ApiMessageListAdapter adapter = new ApiMessageListAdapter(this, getIntent().getExtras().get("ContactName").toString());
         lstApiMessages.setAdapter(adapter);
         lstApiMessages.setLayoutManager(new LinearLayoutManager(this));
 
