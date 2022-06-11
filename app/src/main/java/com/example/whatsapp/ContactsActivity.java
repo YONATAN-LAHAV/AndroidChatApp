@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import com.example.whatsapp.adapters.ApiContactListAdapter;
 import com.example.whatsapp.interfaces.ListItemClickListener;
 import com.example.whatsapp.viewmodels.ApiContactViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ContactsActivity extends AppCompatActivity implements ListItemClickListener {
 
@@ -20,6 +22,13 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+
+        // Set button to add new contact screen.
+        FloatingActionButton btnToAddContact = findViewById(R.id.btnAddContactScreen);
+        btnToAddContact.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AddContactActivity.class);
+            startActivity(intent);
+        });
 
         // Init viewModel field.
         viewModel = new ViewModelProvider(this).get(ApiContactViewModel.class);

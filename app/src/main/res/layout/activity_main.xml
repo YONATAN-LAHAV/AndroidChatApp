@@ -42,6 +42,11 @@
             android:layout_height="wrap_content"
             android:text="@string/to_chat_screen" />
 
+        <Button
+            android:id="@+id/btnToAddContactScreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/to_add_contact_screen" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
