@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.whatsapp.adapters.ApiContactListAdapter;
+import com.example.whatsapp.interfaces.ListItemClickListener;
 import com.example.whatsapp.viewmodels.ApiContactViewModel;
 
-public class ContactsActivity extends AppCompatActivity {
+public class ContactsActivity extends AppCompatActivity implements ListItemClickListener {
 
     private ApiContactViewModel viewModel;
 
@@ -24,9 +26,11 @@ public class ContactsActivity extends AppCompatActivity {
 
         // RecycleView logic.
         RecyclerView lstApiContacts = findViewById(R.id.lstApiContacts);
-        final ApiContactListAdapter adapter = new ApiContactListAdapter(this);
+        final ApiContactListAdapter adapter = new ApiContactListAdapter(this, this);
         lstApiContacts.setAdapter(adapter);
         lstApiContacts.setLayoutManager(new LinearLayoutManager(this));
+
+        lstApiContacts.setClickable(true);
 
         // Set observer on the data in the viewModel. when viewModel data will change,
         // the method will activate.
@@ -45,5 +49,11 @@ public class ContactsActivity extends AppCompatActivity {
 //        contacts.add(new ApiContact("neta", "neta", "localhost", "Heeeeeeeeeee", "10:00"));
 //        contacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Hellooo", "10:00"));
 //        adapter.setContacts(contacts);
+    }
+
+    @Override
+    public void onListItemClick(int position) {
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
     }
 }

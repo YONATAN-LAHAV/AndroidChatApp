@@ -10,5 +10,5 @@
     <color name="ApiContactBackground">#C2C2C2</color>
     <color name="sentMessage">#C1FFB6</color>
     <color name="recivedMessage">#74EAFF</color>
-
+    <color name="clicked">#838383</color>
 </resources>
