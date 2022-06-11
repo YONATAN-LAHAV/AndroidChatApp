@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
             userDao.insert(user);
         });
 
-         List<UserWithConversation> userArray = userDao.index();
+        List<UserWithConversation> userArray = userDao.index();
 
 //        if (db.UserDao().get("admin") == null)
 //            binding.btnRegister.setActivated(false);
