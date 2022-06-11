@@ -73,7 +73,7 @@ public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAd
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            _onClickListener.onListItemClick(view);
+            _onClickListener.onListItemClick(_contacts.get(position));
         }
     }
 }

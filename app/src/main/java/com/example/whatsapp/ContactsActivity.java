@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.whatsapp.adapters.ApiContactListAdapter;
+import com.example.whatsapp.entities.ApiContact;
 import com.example.whatsapp.interfaces.ListItemClickListener;
 import com.example.whatsapp.viewmodels.ApiContactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,10 +50,10 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
     }
 
     @Override
-    public void onListItemClick(View view) {
-        TextView v = view.findViewById(R.id.tvName);
+    public void onListItemClick(ApiContact apiContact) {
         Intent intent = new Intent(this, ChatActivity.class);
-        intent.putExtra("Name", v.getText().toString());
+        intent.putExtra("ContactUsername", apiContact.getId());
+        intent.putExtra("ContactName", apiContact.getName());
         startActivity(intent);
     }
 }

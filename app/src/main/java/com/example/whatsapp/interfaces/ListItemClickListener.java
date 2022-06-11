@@ -1,8 +1,8 @@
 package com.example.whatsapp.interfaces;
 
-import android.view.View;
+import com.example.whatsapp.entities.ApiContact;
 
 public interface ListItemClickListener {
-    void onListItemClick(View view);
+    void onListItemClick(ApiContact apiContact);
 
 }
