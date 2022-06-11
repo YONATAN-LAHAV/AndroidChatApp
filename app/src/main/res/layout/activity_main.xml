@@ -42,6 +42,12 @@
             android:layout_height="wrap_content"
             android:text="@string/to_chat_screen" />
 
+        <Button
+            android:id="@+id/btnToSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="to Settings" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
