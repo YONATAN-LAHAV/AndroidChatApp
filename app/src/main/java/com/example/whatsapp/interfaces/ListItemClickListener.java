@@ -1,6 +1,8 @@
 package com.example.whatsapp.interfaces;
 
+import android.view.View;
+
 public interface ListItemClickListener {
-    void onListItemClick(int position);
+    void onListItemClick(View view);
 
 }
