@@ -10,13 +10,16 @@ import com.example.whatsapp.api.UserAPI;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UserAPI userAPI = new UserAPI();
+        UserAPI userAPI = new UserAPI(this);
         userAPI.get();
+//        userAPI.login();
+
 
         Button btnToLoginScreen = findViewById(R.id.btnToLoginScreen);
         Button btnToRegisterScreen = findViewById(R.id.btnToRegisterScreen);
