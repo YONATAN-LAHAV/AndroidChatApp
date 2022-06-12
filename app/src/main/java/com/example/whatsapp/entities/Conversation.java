@@ -5,9 +5,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 
-@Entity
 public class Conversation {
-    @PrimaryKey(autoGenerate = true)
     private int id;
     private String UserId;
 

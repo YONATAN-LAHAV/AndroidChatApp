@@ -1,10 +1,7 @@
 package com.example.whatsapp.entities;
 
 
-import androidx.room.PrimaryKey;
-
 public class ApiMessage {
-    @PrimaryKey(autoGenerate = true)
     private int id;
     private String content;
     private String created;

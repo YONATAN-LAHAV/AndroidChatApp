@@ -14,10 +14,10 @@ import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private AppDB db;
+    //private AppDB db;
     private ActivityRegisterBinding binding;
     private User user;
-    UserDao userDao;
+    //UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +27,15 @@ public class RegisterActivity extends AppCompatActivity {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Create db.
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDB.class
-                        , "ChatAppDB")
-                .allowMainThreadQueries()
-                .build();
+//        // Create db.
+//        db = Room.databaseBuilder(getApplicationContext(),
+//                        AppDB.class
+//                        , "ChatAppDB")
+//                .allowMainThreadQueries()
+//                .build();
+
         // Create userDao.
-        userDao = db.UserDao();
+/*        userDao = db.UserDao();
         //bind to btnRegister.
         binding.btnRegister.setOnClickListener(view -> {
             String username = binding.etUsername.getText().toString();
@@ -42,9 +43,9 @@ public class RegisterActivity extends AppCompatActivity {
             String nickname = binding.etNickname.getText().toString();
             user = new User(username, password, nickname);
             userDao.insert(user);
-        });
+        });*/
 
-        List<UserWithConversation> userArray = userDao.index();
+//        List<UserWithConversation> userArray = userDao.index();
 
 //        if (db.UserDao().get("admin") == null)
 //            binding.btnRegister.setActivated(false);
