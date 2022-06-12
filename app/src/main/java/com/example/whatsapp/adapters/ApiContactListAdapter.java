@@ -25,6 +25,7 @@ public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAd
     public void setContacts(List<ApiContact> contacts) {
 //        this._contacts = new ArrayList<>(contacts);
         this._contacts = contacts;
+        notifyDataSetChanged();
     }
 
     public ApiContactListAdapter(Context context, ListItemClickListener onClickListener) {
