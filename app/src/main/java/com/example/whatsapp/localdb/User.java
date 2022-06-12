@@ -1,11 +1,13 @@
 package com.example.whatsapp.localdb;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class User {
     @PrimaryKey(autoGenerate =  false)
+    @NonNull
     private String userId;
     private String password;
     private String picture;
