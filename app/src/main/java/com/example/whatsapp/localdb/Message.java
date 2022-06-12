@@ -9,19 +9,19 @@ public class Message {
     @PrimaryKey(autoGenerate =  true)
     private int messageId;
 
-    private String created; // time string
-    private String contactId;
+    private String created;    // time string
+    private String receiverContact;
     private String content;
-    private String createdByUser;
+    private String senderUser;
     private boolean sent;
 
-    public Message(int messageId, String content, String created, boolean sent, String contactId, String createdByUser) {
+    public Message(int messageId, String content, String created, boolean sent, String receiverContact, String senderUser) {
         this.messageId = messageId;
         this.content = content;
         this.created = created;
         this.sent = sent;
-        this.contactId = contactId;
-        this.createdByUser = createdByUser;
+        this.receiverContact = receiverContact;
+        this.senderUser = senderUser;
     }
 
     public int getMessageId() {
@@ -32,14 +32,6 @@ public class Message {
         this.messageId = messageId;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getCreated() {
         return created;
     }
@@ -48,28 +40,36 @@ public class Message {
         this.created = created;
     }
 
+    public String getReceiverContact() {
+        return receiverContact;
+    }
+
+    public void setReceiverContact(String receiverContact) {
+        this.receiverContact = receiverContact;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getSenderUser() {
+        return senderUser;
+    }
+
+    public void setSenderUser(String senderUser) {
+        this.senderUser = senderUser;
+    }
+
     public boolean isSent() {
         return sent;
     }
 
     public void setSent(boolean sent) {
         this.sent = sent;
-    }
-
-    public String getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(String contactId) {
-        this.contactId = contactId;
-    }
-
-    public String getCreatedByUser() {
-        return createdByUser;
-    }
-
-    public void setCreatedByUser(String createdByUser) {
-        this.createdByUser = createdByUser;
     }
 }
 

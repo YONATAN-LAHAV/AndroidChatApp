@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UserAPI userAPI = new UserAPI(this);
-        userAPI.get();
+//        UserAPI userAPI = new UserAPI(this);
+//        userAPI.get();
 //        userAPI.login();
 
 
