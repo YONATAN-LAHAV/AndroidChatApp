@@ -19,14 +19,16 @@ import java.util.List;
 public class ApiMessageListAdapter extends RecyclerView.Adapter<ApiMessageListAdapter.MessagesViewHolder> {
     private final LayoutInflater _layoutInflater;
     private List<ApiMessage> _messages;
+    private String _contactName;
 
 
     public void setMessages(List<ApiMessage> messages) {
         this._messages = messages;
     }
 
-    public ApiMessageListAdapter(Context context) {
+    public ApiMessageListAdapter(Context context, String contactName) {
         _layoutInflater = LayoutInflater.from(context);
+        _contactName = contactName;
     }
 
     @NonNull
@@ -40,11 +42,13 @@ public class ApiMessageListAdapter extends RecyclerView.Adapter<ApiMessageListAd
     public void onBindViewHolder(@NonNull MessagesViewHolder holder, int position) {
         if (_messages != null) {
             final ApiMessage message = _messages.get(position);
-            if (message.is_sent())
+            if (message.is_sent()) {
                 holder.layout.setBackgroundResource(R.drawable.sent_message);
-            else
+                holder.tvName.setText("Me:");
+            } else {
                 holder.layout.setBackgroundResource(R.drawable.recived_message);
-            holder.tvName.setText("DEFUALT");
+                holder.tvName.setText(_contactName + ":");
+            }
             holder.tvTime.setText(message.get_created());
             holder.tvContent.setText(message.get_content());
         }

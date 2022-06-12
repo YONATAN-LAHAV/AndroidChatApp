@@ -1,6 +1,8 @@
 package com.example.whatsapp.interfaces;
 
+import com.example.whatsapp.entities.ApiContact;
+
 public interface ListItemClickListener {
-    void onListItemClick(int position);
+    void onListItemClick(ApiContact apiContact);
 
 }

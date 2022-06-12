@@ -22,8 +22,9 @@ public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAd
     private List<ApiContact> _contacts;
     final private ListItemClickListener _onClickListener;
 
-    public void setContacts(List<ApiContact> _contacts) {
-        this._contacts = _contacts;
+    public void setContacts(List<ApiContact> contacts) {
+//        this._contacts = new ArrayList<>(contacts);
+        this._contacts = contacts;
     }
 
     public ApiContactListAdapter(Context context, ListItemClickListener onClickListener) {
@@ -73,7 +74,7 @@ public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAd
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            _onClickListener.onListItemClick(position);
+            _onClickListener.onListItemClick(_contacts.get(position));
         }
     }
 }
