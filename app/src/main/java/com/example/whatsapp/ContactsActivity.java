@@ -15,9 +15,13 @@ import com.example.whatsapp.interfaces.ListItemClickListener;
 import com.example.whatsapp.viewmodels.ApiContactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactsActivity extends AppCompatActivity implements ListItemClickListener {
 
     private ApiContactViewModel viewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +41,16 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         // RecycleView logic.
         RecyclerView lstApiContacts = findViewById(R.id.lstApiContacts);
         final ApiContactListAdapter adapter = new ApiContactListAdapter(this, this);
-        lstApiContacts.setAdapter(adapter);
         lstApiContacts.setLayoutManager(new LinearLayoutManager(this));
 
         lstApiContacts.setClickable(true);
+        lstApiContacts.setAdapter(adapter);
 
         // Set observer on the data in the viewModel. when viewModel data will change,
         // the method will activate.
         viewModel.get().observe(this, apiContacts -> {
             adapter.setContacts(apiContacts);
+//            lstApiContacts.setAdapter(adapter);
         });
     }
 
