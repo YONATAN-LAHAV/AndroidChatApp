@@ -1,16 +1,8 @@
 package com.example.whatsapp.entities;
 
 import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
 public class User {
-    @PrimaryKey
-    @NonNull
     private String id;
     private String password;
     private String nickname;
