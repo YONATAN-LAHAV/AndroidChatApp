@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         Button btnToContacts = findViewById(R.id.btnToContacts);
         Button btnToChatScreen = findViewById(R.id.btnToChatScreen);
         Button btnToAddContactScreen = findViewById(R.id.btnToAddContactScreen);
+        Button btnToSettings = findViewById(R.id.btnToSettings);
+
 
         btnToLoginScreen.setOnClickListener(view -> {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -45,8 +47,14 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ChatActivity.class);
             startActivity(intent);
         });
+
         btnToAddContactScreen.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddContactActivity.class);
+            startActivity(intent);
+        });
+
+        btnToSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(this, Settings.class);
             startActivity(intent);
         });
     }
