@@ -1,5 +1,6 @@
 package com.example.whatsapp.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +23,11 @@ public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAd
     private List<ApiContact> _contacts;
     final private ListItemClickListener _onClickListener;
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setContacts(List<ApiContact> contacts) {
 //        this._contacts = new ArrayList<>(contacts);
         this._contacts = contacts;
+        notifyDataSetChanged();
     }
 
     public ApiContactListAdapter(Context context, ListItemClickListener onClickListener) {
