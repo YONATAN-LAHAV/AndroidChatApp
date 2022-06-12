@@ -36,8 +36,7 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         });
 
         // Init viewModel field.
-        viewModel = new ViewModelProvider(this).get(ApiContactViewModel.class);
-
+        viewModel = new ApiContactViewModel(getIntent().getExtras().get("username").toString());
         // RecycleView logic.
         RecyclerView lstApiContacts = findViewById(R.id.lstApiContacts);
         final ApiContactListAdapter adapter = new ApiContactListAdapter(this, this);
@@ -50,7 +49,7 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         // the method will activate.
         viewModel.get().observe(this, apiContacts -> {
             adapter.setContacts(apiContacts);
-//            lstApiContacts.setAdapter(adapter);
+        //      lstApiContacts.setAdapter(adapter);
         });
     }
 
