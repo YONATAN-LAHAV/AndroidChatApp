@@ -21,7 +21,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
         Bundle extras = getIntent().getExtras();
-        String invalid;
         TextView tvErr = findViewById(R.id.tvErr);
         if (extras != null)
             tvErr.setText(extras.getString("Invalid"));

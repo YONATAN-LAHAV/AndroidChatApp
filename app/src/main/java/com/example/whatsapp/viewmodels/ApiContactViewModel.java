@@ -9,11 +9,17 @@ import com.example.whatsapp.repositories.ApiContactRepository;
 import java.util.List;
 
 public class ApiContactViewModel extends ViewModel {
-    private final ApiContactRepository _apiContactRepository;
+    private  ApiContactRepository _apiContactRepository;
     private final LiveData<List<ApiContact>> _apiContacts;
+    private String _username;
 
-    public ApiContactViewModel() {
-        _apiContactRepository = new ApiContactRepository();
+//    public void setUsername(String username) {
+//        _username = username;
+//        _apiContactRepository = new ApiContactRepository(_username);
+//    }
+
+    public ApiContactViewModel(String username) {
+        _apiContactRepository = new ApiContactRepository(username);
         _apiContacts = _apiContactRepository.getAll();
 
     }

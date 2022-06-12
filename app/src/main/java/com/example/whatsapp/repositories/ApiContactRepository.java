@@ -14,10 +14,10 @@ public class ApiContactRepository {
     private UserAPI api;
     private ApiContactsListData _apiContactsListData;
 
-    public ApiContactRepository() {
+    public ApiContactRepository(String username) {
 //        LocalDatabase db = LocalDatabase.getInstance();
 //        dao = db.apiContactDao();
-        api = new UserAPI();
+        api = new UserAPI(username);
         _apiContactsListData = new ApiContactsListData();
     }
 
@@ -25,37 +25,7 @@ public class ApiContactRepository {
         public ApiContactsListData() {
             super();
 
-//            api.get(this);
             List<ApiContact> apiContacts = new LinkedList<>();
-            apiContacts.add(new ApiContact("admin", "admin", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Heeeeeeeeeee", "10:00"));
-//            apiContacts.add(new ApiContact("roy", "roy", "localhost", "Hellooo", "10:00"));
-//            apiContacts.add(new ApiContact("liron", "liron", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("admin", "admin", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Heeeeeeeeeee", "10:00"));
-//            apiContacts.add(new ApiContact("roy", "roy", "localhost", "Hellooo", "10:00"));
-//            apiContacts.add(new ApiContact("liron", "liron", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("admin", "admin", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Heeeeeeeeeee", "10:00"));
-//            apiContacts.add(new ApiContact("roy", "roy", "localhost", "Hellooo", "10:00"));
-//            apiContacts.add(new ApiContact("liron", "liron", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("admin", "admin", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Heeeeeeeeeee", "10:00"));
-//            apiContacts.add(new ApiContact("roy", "roy", "localhost", "Hellooo", "10:00"));
-//            apiContacts.add(new ApiContact("liron", "liron", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("admin", "admin", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Heeeeeeeeeee", "10:00"));
-//            apiContacts.add(new ApiContact("roy", "roy", "localhost", "Hellooo", "10:00"));
-//            apiContacts.add(new ApiContact("liron", "liron", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("admin", "admin", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Heeeeeeeeeee", "10:00"));
-//            apiContacts.add(new ApiContact("roy", "roy", "localhost", "Hellooo", "10:00"));
-//            apiContacts.add(new ApiContact("liron", "liron", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("admin", "admin", "localhost", "Hey", "10:00"));
-//            apiContacts.add(new ApiContact("yonatan", "yonatan", "localhost", "Heeeeeeeeeee", "10:00"));
-//            apiContacts.add(new ApiContact("roy", "roy", "localhost", "Hellooo", "10:00"));
-//            apiContacts.add(new ApiContact("liron", "liron", "localhost", "Hey", "10:00"));
-//            setValue(apiContacts);
             setValue(apiContacts);
         }
 
@@ -63,13 +33,8 @@ public class ApiContactRepository {
         protected void onActive() {
             super.onActive();
             new Thread(() -> {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                UserAPI userAPI = new UserAPI();
-                userAPI.get(this);
+//                UserAPI userAPI = new UserAPI();
+                api.get(this);
             }).start();
 //            new Thread(()->{
 //                _apiContactsListData.postValue(dao.get());

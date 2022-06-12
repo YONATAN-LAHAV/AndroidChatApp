@@ -27,6 +27,7 @@ public class UserAPI {
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
     Context context;
+    String _username;
 
     // Only for the Login.
     public UserAPI(Context context) {
@@ -39,13 +40,14 @@ public class UserAPI {
     }
 
     // For repositories, no need context.
-    public UserAPI() {
+    public UserAPI(String username) {
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
         this.context = null;
+        _username = username;
     }
 
     public void login(String username, String password) {
@@ -76,7 +78,7 @@ public class UserAPI {
     }
 
     public void get(MutableLiveData<List<ApiContact>> apiContacts) {
-        Call<List<ApiContact>> call = webServiceAPI.GetAllContacts("admin");
+        Call<List<ApiContact>> call = webServiceAPI.GetAllContacts(_username);
         call.enqueue(new Callback<List<ApiContact>>() {
             @Override
             public void onResponse(Call<List<ApiContact>> call, Response<List<ApiContact>> response) {
