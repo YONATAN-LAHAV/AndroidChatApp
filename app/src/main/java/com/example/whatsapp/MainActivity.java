@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-import com.example.whatsapp.api.UserAPI;
 
 public class MainActivity extends AppCompatActivity {
 

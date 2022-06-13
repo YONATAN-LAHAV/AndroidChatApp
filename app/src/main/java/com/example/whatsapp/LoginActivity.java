@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.whatsapp.api.UserAPI;
+import com.example.whatsapp.api.LoginApi;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        UserAPI api = new UserAPI();
+        LoginApi api = new LoginApi();
 
 
         Bundle extras = getIntent().getExtras();

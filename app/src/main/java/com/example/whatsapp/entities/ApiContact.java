@@ -20,6 +20,14 @@ public class ApiContact {
         this.lastdate = lastdate;
     }
 
+    public ApiContact(ContactsPostRequest contactsPostRequest) {
+        this.id = contactsPostRequest.getId();
+        this.name = contactsPostRequest.getName();
+        this.server = contactsPostRequest.getServer();
+        this.last = "";
+        this.lastdate = "";
+    }
+
     public String getId() {
         return id;
     }

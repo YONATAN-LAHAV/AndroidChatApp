@@ -1,9 +1,11 @@
 package com.example.whatsapp.viewmodels;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.whatsapp.entities.ApiContact;
+import com.example.whatsapp.entities.ContactsPostRequest;
 import com.example.whatsapp.entities.LoginPostRequest;
 import com.example.whatsapp.repositories.ApiContactRepository;
 
@@ -30,14 +32,15 @@ public class ApiContactViewModel extends ViewModel {
 
     /**
      * Get all contacts of the connected user as LiveData.
+     *
      * @return
      */
     public LiveData<List<ApiContact>> get() {
         return _apiContacts;
     }
 
-    public void add(ApiContact apiContact) {
-        _apiContactRepository.add(apiContact);
+    public void add(ContactsPostRequest contactsPostRequest, AppCompatActivity appCompatActivity) {
+        _apiContactRepository.add(contactsPostRequest, appCompatActivity);
     }
 //
 //    public void delete(ApiContact apiContact) {
