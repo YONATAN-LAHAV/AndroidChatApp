@@ -24,4 +24,5 @@
     <string name="username">Username</string>
     <string name="add_new_contact">Add New Contact</string>
     <string name="to_add_contact_screen">To Add Contact Screen</string>
+    <string name="trying">trying</string>
 </resources>
