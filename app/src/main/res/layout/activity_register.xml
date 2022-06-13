@@ -45,6 +45,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="1dp">
 
+        <TextView
+            android:id="@+id/tvErr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#FF0000"
+            android:textStyle="bold"
+            tools:text="Errors." />
+
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
