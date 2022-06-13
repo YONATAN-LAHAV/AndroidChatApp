@@ -24,6 +24,7 @@ public class ApiMessageListAdapter extends RecyclerView.Adapter<ApiMessageListAd
 
     public void setMessages(List<ApiMessage> messages) {
         this._messages = messages;
+        notifyDataSetChanged();
     }
 
     public ApiMessageListAdapter(Context context, String contactName) {

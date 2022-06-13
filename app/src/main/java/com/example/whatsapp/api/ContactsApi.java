@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.whatsapp.MyApplication;
 import com.example.whatsapp.R;
 import com.example.whatsapp.entities.ApiContact;
+import com.example.whatsapp.entities.ApiInvitation;
 import com.example.whatsapp.entities.ContactsPostRequest;
 import com.example.whatsapp.entities.LoginPostRequest;
 
@@ -25,7 +26,6 @@ public class ContactsApi {
     LoginPostRequest _connectedUser;
     MutableLiveData<List<ApiContact>> _apiContactsLiveData;
 
-    // For repositories.
     public ContactsApi(LoginPostRequest connectedUser, MutableLiveData<List<ApiContact>> apiContactsLiveData) {
         _retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
@@ -45,10 +45,7 @@ public class ContactsApi {
         call.enqueue(new Callback<List<ApiContact>>() {
             @Override
             public void onResponse(Call<List<ApiContact>> call, Response<List<ApiContact>> response) {
-                new Thread(() -> {
-                    _apiContactsLiveData.postValue(response.body());
-                }).start();
-
+                _apiContactsLiveData.postValue(response.body());
 //                new Thread(() -> {
 //                    dao.clear();
 //                    dao.insertList(response.body());
@@ -63,31 +60,68 @@ public class ContactsApi {
         });
     }
 
+    public void invitation(ContactsPostRequest contactsPostRequest, AppCompatActivity appCompatActivity) {
+        Call<Void> call = _webServiceAPI
+                .PostInvitation(new ApiInvitation(_connectedUser.getId()
+                        , contactsPostRequest.getId()
+                        , appCompatActivity.getString(R.string.serverPath)));
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 201)
+                    add(contactsPostRequest, appCompatActivity);
+                else {
+                    appCompatActivity.getIntent()
+                            .putExtra("Invalid", "Invalid new contact !");
+                    appCompatActivity.finish();
+                    appCompatActivity.overridePendingTransition(0, 0);
+                    appCompatActivity.startActivity(appCompatActivity.getIntent());
+                    appCompatActivity.overridePendingTransition(0, 0);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                appCompatActivity.getIntent()
+                        .putExtra("Invalid", "Invalid new contact !");
+                appCompatActivity.finish();
+                appCompatActivity.overridePendingTransition(0, 0);
+                appCompatActivity.startActivity(appCompatActivity.getIntent());
+                appCompatActivity.overridePendingTransition(0, 0);
+            }
+        });
+    }
+
     public void add(ContactsPostRequest contactsPostRequest, AppCompatActivity appCompatActivity) {
         Call<Void> call = _webServiceAPI.CreateContact(contactsPostRequest, _connectedUser.getId());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code()==201) {
+                if (response.code() == 201) {
                     new Thread(() -> {
                         List<ApiContact> apiContactList = _apiContactsLiveData.getValue();
                         apiContactList.add(new ApiContact(contactsPostRequest));
                         _apiContactsLiveData.postValue(apiContactList);
                     }).start();
                     appCompatActivity.finish();
-                }else{
+                } else {
                     appCompatActivity.getIntent()
                             .putExtra("Invalid", "Invalid new contact !");
                     appCompatActivity.finish();
-                    appCompatActivity.overridePendingTransition( 0, 0);
+                    appCompatActivity.overridePendingTransition(0, 0);
                     appCompatActivity.startActivity(appCompatActivity.getIntent());
-                    appCompatActivity.overridePendingTransition( 0, 0);
+                    appCompatActivity.overridePendingTransition(0, 0);
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                appCompatActivity.getIntent()
+                        .putExtra("Invalid", "Invalid new contact !");
                 appCompatActivity.finish();
+                appCompatActivity.overridePendingTransition(0, 0);
+                appCompatActivity.startActivity(appCompatActivity.getIntent());
+                appCompatActivity.overridePendingTransition(0, 0);
             }
         });
     }

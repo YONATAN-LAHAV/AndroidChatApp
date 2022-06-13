@@ -12,7 +12,7 @@ import com.example.whatsapp.repositories.ApiContactRepository;
 import java.util.List;
 
 public class ApiContactViewModel extends ViewModel {
-    // Repository for cotacts.
+    // Repository for contacts.
     private ApiContactRepository _apiContactRepository;
     // LivaData with all the connected user contacts.
     private final LiveData<List<ApiContact>> _apiContacts;

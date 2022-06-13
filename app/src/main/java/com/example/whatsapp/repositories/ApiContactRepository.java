@@ -13,9 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ApiContactRepository {
+
     //    private ApiContactDao dao;
-
-
     private ContactsApi _api;
     private ApiContactsListData _apiContactsListData;
     private LoginPostRequest _connectedUser;
@@ -50,15 +49,17 @@ public class ApiContactRepository {
         }
     }
 
+    /**
+     * Get all the connected user contacts.
+     */
     public LiveData<List<ApiContact>> getAll() {
         return _apiContactsListData;
     }
 
+    /**
+     * Add new contact. the _api.invitation method excute both add and invitation api calls.
+     */
     public void add(ContactsPostRequest contactsPostRequest, AppCompatActivity appCompatActivity) {
-        _api.add(contactsPostRequest,appCompatActivity);
+        _api.invitation(contactsPostRequest, appCompatActivity);
     }
-
-//    public void add(ApiContact apiContact) {
-//        api.addNewContact(apiContact);
-//    }
 }

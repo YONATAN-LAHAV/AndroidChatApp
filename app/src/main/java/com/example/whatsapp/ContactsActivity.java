@@ -23,7 +23,8 @@ import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity implements ListItemClickListener {
 
-    private ApiContactViewModel viewModel;
+    private ApiContactViewModel _viewModel;
+    private LoginPostRequest _connectedUser;
 
 
     @Override
@@ -33,8 +34,10 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
 
         // Get extras and create LoginPostRequest object to pass the connected user.
         Bundle extras = getIntent().getExtras();
-        LoginPostRequest connectedUser = new LoginPostRequest(extras.getString("username"),
-                extras.getString("password"));
+
+        // Init connected user.
+        _connectedUser = new LoginPostRequest(extras.getString("username")
+                , extras.getString("password"));
 
         // Set button to add new contact screen.
         FloatingActionButton btnToAddContact = findViewById(R.id.btnAddContactScreen);
@@ -47,15 +50,15 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         });
 
 
-        // Init viewModel field.
+        // Init _viewModel field.
         ViewModelProvider.Factory factory = new ViewModelProvider.Factory() {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new ApiContactViewModel(connectedUser);
+                return (T) new ApiContactViewModel(_connectedUser);
             }
         };
-        viewModel = new ViewModelProvider(this, factory).get(ApiContactViewModel.class);
+        _viewModel = new ViewModelProvider(this, factory).get(ApiContactViewModel.class);
         // RecycleView logic.
         RecyclerView lstApiContacts = findViewById(R.id.lstApiContacts);
         final ApiContactListAdapter adapter = new ApiContactListAdapter(this, this);
@@ -66,7 +69,7 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
 
         // Set observer on the data in the viewModel. when viewModel data will change,
         // the method will activate.
-        viewModel.get().observe(this, apiContacts -> {
+        _viewModel.get().observe(this, apiContacts -> {
             adapter.setContacts(apiContacts);
             //      lstApiContacts.setAdapter(adapter);
         });
@@ -75,15 +78,12 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
     @Override
     public void onListItemClick(ApiContact apiContact) {
         Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra("username", _connectedUser.getId());
+        intent.putExtra("password", _connectedUser.getPassword());
         intent.putExtra("ContactUsername", apiContact.getId());
         intent.putExtra("ContactName", apiContact.getName());
+        intent.putExtra("ContactServer", apiContact.getServer());
         startActivity(intent);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }
-
 

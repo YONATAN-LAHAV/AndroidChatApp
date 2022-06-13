@@ -24,4 +24,7 @@
     <string name="username">Username</string>
     <string name="add_new_contact">Add New Contact</string>
     <string name="to_add_contact_screen">To Add Contact Screen</string>
+    <string name="serverPath">10.0.2.2:7182</string>
+    <string name="write_something">Write something,,,</string>
+    <string name="send">Send</string>
 </resources>
