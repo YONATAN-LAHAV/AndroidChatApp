@@ -60,5 +60,7 @@ public interface WebServiceAPI {
     @POST("Login")
     Call<User> Login(@Body LoginPostRequest loginPostRequest);
 
+    @POST
+    Call<User> Register(@Body User user);
 
 }

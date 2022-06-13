@@ -6,7 +6,9 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.whatsapp.api.RegisterApi;
 import com.example.whatsapp.databinding.ActivityRegisterBinding;
 import com.example.whatsapp.entities.User;
 
@@ -14,44 +16,40 @@ import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private AppDB db;
-    private ActivityRegisterBinding binding;
-    private User user;
-    UserDao userDao;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
 
         // Create binding object in order to replace "findViewById(R.id.btnToLogin)".
-        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        ActivityRegisterBinding binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Create db.
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDB.class
-                        , "ChatAppDB")
-                .allowMainThreadQueries()
-                .build();
-        // Create userDao.
-        userDao = db.UserDao();
+        // Validation message.
+        Bundle extras = getIntent().getExtras();
+        TextView tvErr = findViewById(R.id.tvErr);
+        if (extras != null)
+            tvErr.setText(extras.getString("Invalid"));
+        else
+            tvErr.setText("");
+
+        // Create RegisterApi object.
+        RegisterApi api = new RegisterApi();
+
         //bind to btnRegister.
         binding.btnRegister.setOnClickListener(view -> {
             String username = binding.etUsername.getText().toString();
             String password = binding.etPassword.getText().toString();
             String nickname = binding.etNickname.getText().toString();
-            user = new User(username, password, nickname);
-            userDao.insert(user);
+            User user = new User(username, password, nickname);
+            api.register(user, this);
         });
 
-        List<UserWithConversation> userArray = userDao.index();
-
-//        if (db.UserDao().get("admin") == null)
-//            binding.btnRegister.setActivated(false);
-        Button btnToLogin = findViewById(R.id.btnToLogin);
-        btnToLogin.setOnClickListener(view -> {
+        // Nevigate to the login screen.
+        binding.btnToLogin.setOnClickListener(view -> {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 }
