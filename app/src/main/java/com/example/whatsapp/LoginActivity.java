@@ -17,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        UserAPI api = new UserAPI(this);
+        UserAPI api = new UserAPI();
 
 
         Bundle extras = getIntent().getExtras();
@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
             EditText etPassword = findViewById(R.id.etPassword);
             String username = etUsername.getText().toString();
             String password = etPassword.getText().toString();
-            api.login(username,password);
+            api.login(username, password, this);
         });
 
 

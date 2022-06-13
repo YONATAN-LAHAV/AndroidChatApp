@@ -4,16 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.whatsapp.AddContactActivity;
 import com.example.whatsapp.ContactsActivity;
 import com.example.whatsapp.LoginActivity;
 import com.example.whatsapp.MyApplication;
 import com.example.whatsapp.entities.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import com.example.whatsapp.R;
 
@@ -26,31 +26,31 @@ import retrofit2.converter.gson.*;
 public class UserAPI {
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
-    Context context;
-    String _username;
+    LoginPostRequest _connectedUser;
 
     // Only for the Login.
-    public UserAPI(Context context) {
+    public UserAPI() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
-        this.context = context;
     }
 
-    // For repositories, no need context.
-    public UserAPI(String username) {
+    // For repositories.
+    public UserAPI(LoginPostRequest connectedUser) {
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
-        this.context = null;
-        _username = username;
+        _connectedUser = connectedUser;
     }
 
-    public void login(String username, String password) {
+    /**
+     * Login method.
+     */
+    public void login(String username, String password, Context context) {
         Call<User> call = webServiceAPI.Login(new LoginPostRequest(username, password));
         call.enqueue(new Callback<User>() {
 
@@ -77,8 +77,11 @@ public class UserAPI {
         });
     }
 
+    /**
+     * Get all contacts of the connected user.
+     */
     public void get(MutableLiveData<List<ApiContact>> apiContacts) {
-        Call<List<ApiContact>> call = webServiceAPI.GetAllContacts(_username);
+        Call<List<ApiContact>> call = webServiceAPI.GetAllContacts(_connectedUser.getId());
         call.enqueue(new Callback<List<ApiContact>>() {
             @Override
             public void onResponse(Call<List<ApiContact>> call, Response<List<ApiContact>> response) {
@@ -98,5 +101,26 @@ public class UserAPI {
                 Log.d("myError", String.valueOf(t));
             }
         });
+    }
+
+    public void addNewContact(ApiContact apiContact) {
+        ContactsPostRequest contactsPostRequest = new ContactsPostRequest(
+                apiContact.getId(),
+                apiContact.getName(),
+                apiContact.getServer()
+        );
+        Call<Void> call = webServiceAPI.CreateContact(contactsPostRequest, _connectedUser.getId());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+
     }
 }

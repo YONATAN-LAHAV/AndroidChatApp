@@ -4,33 +4,41 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.whatsapp.entities.ApiContact;
+import com.example.whatsapp.entities.LoginPostRequest;
 import com.example.whatsapp.repositories.ApiContactRepository;
 
 import java.util.List;
 
 public class ApiContactViewModel extends ViewModel {
-    private  ApiContactRepository _apiContactRepository;
+    // Repository for cotacts.
+    private ApiContactRepository _apiContactRepository;
+    // LivaData with all the connected user contacts.
     private final LiveData<List<ApiContact>> _apiContacts;
-    private String _username;
+    // Current connected user.
+    private LoginPostRequest _connectedUser;
 
-//    public void setUsername(String username) {
-//        _username = username;
-//        _apiContactRepository = new ApiContactRepository(_username);
-//    }
-
-    public ApiContactViewModel(String username) {
-        _apiContactRepository = new ApiContactRepository(username);
+    /**
+     * Constructor for ApiContactViewModel object, need to create factory and pass it
+     * via ViewModelProvider in the activity.
+     */
+    public ApiContactViewModel(LoginPostRequest connectedUser) {
+        _connectedUser = connectedUser;
+        _apiContactRepository = new ApiContactRepository(_connectedUser);
         _apiContacts = _apiContactRepository.getAll();
 
     }
 
+    /**
+     * Get all contacts of the connected user as LiveData.
+     * @return
+     */
     public LiveData<List<ApiContact>> get() {
         return _apiContacts;
     }
 
-//    public void add(ApiContact apiContact) {
-//        _apiContactRepository.add(apiContact);
-//    }
+    public void add(ApiContact apiContact) {
+        _apiContactRepository.add(apiContact);
+    }
 //
 //    public void delete(ApiContact apiContact) {
 //        _apiContactRepository.delete(apiContact);
