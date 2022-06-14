@@ -10,6 +10,9 @@ import com.example.whatsapp.entities.ApiMessage;
 import com.example.whatsapp.entities.ApiTransfer;
 import com.example.whatsapp.entities.LoginPostRequest;
 import com.example.whatsapp.entities.MessagePostRequest;
+import com.example.whatsapp.localdb.Contact;
+import com.example.whatsapp.localdb.Message;
+import com.example.whatsapp.localdb.localDatabase;
 
 import java.util.List;
 
@@ -84,12 +87,18 @@ public class MessageApi {
         call.enqueue(new Callback<ApiMessage>() {
             @Override
             public void onResponse(Call<ApiMessage> call, Response<ApiMessage> response) {
+                // Insert new message - localdb
                 new Thread(() -> {
-//                    List<ApiMessage> apiMessageList = _apiMessagesListData.getValue();
-//                    ApiMessage newMessage = response.body();
-//                    newMessage.set_sent(true);
-//                    apiMessageList.add(newMessage);
-                    get();
+                    Message newMessage = new Message(_connectedUser.getId(),
+                            _contact.getId(), messagePostRequest.getContent(), response.body().get_created(), true);
+                    localDatabase.getInstance().messageDao().insertMessage(newMessage);
+                }).start();
+
+                // update messages list - api
+                new Thread(() -> {
+                    List<ApiMessage> temp = _apiMessagesListData.getValue();
+                    temp.add(response.body());
+                    _apiMessagesListData.postValue(temp);
                 }).start();
             }
 

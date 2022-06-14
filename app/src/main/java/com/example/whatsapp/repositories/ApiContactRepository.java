@@ -34,7 +34,7 @@ public class ApiContactRepository {
     private class ApiContactsListData extends MutableLiveData<List<ApiContact>> {
         public ApiContactsListData() {
             super();
-            //List<ApiContact> apiContacts = new LinkedList<>();
+
             new Thread(()->{
                 List<Contact> contactList = _contactDao.index(_connectedUser.getId());
                 List<ApiContact> apiContactList = new LinkedList<>();
@@ -43,7 +43,8 @@ public class ApiContactRepository {
                             contact.getContactServer(), contact.getLast(), contact.getLastDate()));
                 }
                 postValue(apiContactList);
-            }).start();// change here - room updates.
+            }).start();
+            //List<ApiContact> apiContacts = new LinkedList<>();
             //setValue(apiContacts);
         }
 
