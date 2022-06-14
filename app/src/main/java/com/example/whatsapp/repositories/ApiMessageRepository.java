@@ -9,6 +9,10 @@ import com.example.whatsapp.entities.ApiContact;
 import com.example.whatsapp.entities.ApiMessage;
 import com.example.whatsapp.entities.LoginPostRequest;
 import com.example.whatsapp.entities.MessagePostRequest;
+import com.example.whatsapp.localdb.Contact;
+import com.example.whatsapp.localdb.Message;
+import com.example.whatsapp.localdb.MessageDao;
+import com.example.whatsapp.localdb.localDatabase;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -21,10 +25,10 @@ public class ApiMessageRepository {
     private ApiMessagesListData _apiMessagesListData;
     private LoginPostRequest _connectedUser;
     private ApiContact _contact;
+    private MessageDao _messageDao;
 
     public ApiMessageRepository(LoginPostRequest connectedUser, ApiContact contact) {
-//        LocalDatabase db = LocalDatabase.getInstance();
-//        dao = db.apiMessageDao();
+        _messageDao = localDatabase.getInstance().messageDao();
         _connectedUser = connectedUser;
         _contact = contact;
         _apiMessagesListData = new ApiMessagesListData();
@@ -34,8 +38,16 @@ public class ApiMessageRepository {
     private class ApiMessagesListData extends MutableLiveData<List<ApiMessage>> {
         public ApiMessagesListData() {
             super();
+            new Thread(()->{
+                List<Message> messageList = _messageDao.getMessages(_connectedUser.getId(), _contact.getId());
+                List<ApiMessage> apiMessageList = new LinkedList<>();
+                for (Message message : messageList) {
+                    apiMessageList.add( new ApiMessage(message.getContent(), message.getCreated(), message.isSent()));
+                }
+                _apiMessagesListData.postValue(apiMessageList);
+            }).start();
             List<ApiMessage> apiMessages = new LinkedList<>();
-            setValue(apiMessages);
+             setValue(apiMessages);
         }
 
         @Override
@@ -45,9 +57,14 @@ public class ApiMessageRepository {
                 _api.get();
             }).start();
 
-//            new Thread(()->{
-//                _apiMessagesListData.postValue(dao.get());
-//            }).start();
+            new Thread(()->{
+                List<Message> messageList = _messageDao.getMessages(_connectedUser.getId(), _contact.getId());
+                List<ApiMessage> apiMessageList = new LinkedList<>();
+                for (Message message : messageList) {
+                    apiMessageList.add( new ApiMessage(message.getContent(), message.getCreated(), message.isSent()));
+                }
+                _apiMessagesListData.postValue(apiMessageList);
+            }).start();
         }
     }
 

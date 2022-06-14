@@ -1,7 +1,6 @@
 package com.example.whatsapp.api;
 
 import android.content.Intent;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.whatsapp.ContactsActivity;
@@ -9,6 +8,8 @@ import com.example.whatsapp.MyApplication;
 import com.example.whatsapp.R;
 import com.example.whatsapp.entities.LoginPostRequest;
 import com.example.whatsapp.entities.User;
+import com.example.whatsapp.localdb.Users;
+import com.example.whatsapp.localdb.UsersDao;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,13 +20,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RegisterApi {
     Retrofit _retrofit;
     WebServiceAPI _webServiceAPI;
+    private UsersDao _usersDao;
 
-    public RegisterApi() {
+    public RegisterApi(UsersDao userDao) {
         _retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         _webServiceAPI = _retrofit.create(WebServiceAPI.class);
+        _usersDao = userDao;
     }
 
     /**
@@ -42,6 +45,8 @@ public class RegisterApi {
                     intent.putExtra("username", user.getId());
                     intent.putExtra("password", user.getPassword());
                     intent.putExtra("nickname", user.getNickname());
+                    Users userEntity = new Users(user.getId(), "PICTURE");
+                    _usersDao.insertUser(userEntity);
                     appCompatActivity.finish();
                     appCompatActivity.startActivity(intent);
                 } else {

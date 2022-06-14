@@ -11,7 +11,7 @@ import com.example.whatsapp.entities.ApiContact;
 import com.example.whatsapp.entities.ApiInvitation;
 import com.example.whatsapp.entities.ContactsPostRequest;
 import com.example.whatsapp.entities.LoginPostRequest;
-
+import com.example.whatsapp.localdb.*;
 import java.util.List;
 
 import retrofit2.Call;
@@ -103,6 +103,15 @@ public class ContactsApi {
                         apiContactList.add(new ApiContact(contactsPostRequest));
                         _apiContactsLiveData.postValue(apiContactList);
                     }).start();
+
+                    // Insert new Contact - localdb
+                    new Thread(() -> {
+                        Contact newContact = new Contact(_connectedUser.getId(),
+                                contactsPostRequest.getId(), contactsPostRequest.getName(),
+                                contactsPostRequest.getServer(), "", "");
+                        localDatabase.getInstance().contactDao().insert(newContact);
+                    }).start();
+
                     appCompatActivity.finish();
                 } else {
                     appCompatActivity.getIntent()

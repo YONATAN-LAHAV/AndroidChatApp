@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.whatsapp.api.RegisterApi;
 import com.example.whatsapp.databinding.ActivityRegisterBinding;
 import com.example.whatsapp.entities.User;
+import com.example.whatsapp.localdb.*;
+import com.example.whatsapp.localdb.UsersDao;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
 
         // Create binding object in order to replace "findViewById(R.id.btnToLogin)".
         ActivityRegisterBinding binding = ActivityRegisterBinding.inflate(getLayoutInflater());
@@ -34,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
             tvErr.setText("");
 
         // Create RegisterApi object.
-        RegisterApi api = new RegisterApi();
+        RegisterApi api = new RegisterApi(localDatabase.getInstance().usersDao());
 
         //bind to btnRegister.
         binding.btnRegister.setOnClickListener(view -> {
