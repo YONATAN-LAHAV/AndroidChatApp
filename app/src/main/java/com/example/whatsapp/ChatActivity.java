@@ -68,6 +68,8 @@ public class ChatActivity extends AppCompatActivity {
         // the method will activate.
         viewModel.get().observe(this, apiMessages -> {
             adapter.setMessages(apiMessages);
+            lstApiMessages.scrollToPosition(apiMessages.size() - 1);
+
         });
 
         Button btnSend = findViewById(R.id.btnSend);
@@ -81,7 +83,6 @@ public class ChatActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
             } catch (Exception e) {
             }
-            lstApiMessages.scrollToPosition(viewModel.get().getValue().size() - 1);
         });
     }
 }
