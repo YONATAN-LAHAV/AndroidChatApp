@@ -15,8 +15,7 @@ public class Message {
     private String created;         // time string
     private boolean sent;
 
-    public Message(int id, String connectedUser, String contactId, String content, String created, boolean sent) {
-        this.id = id;
+    public Message(String connectedUser, String contactId, String content, String created, boolean sent) {
         this.connectedUser = connectedUser;
         this.contactId = contactId;
         this.content = content;

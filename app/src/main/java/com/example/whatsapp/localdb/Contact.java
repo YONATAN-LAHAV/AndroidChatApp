@@ -17,8 +17,7 @@ public class Contact {
     private String last;
     private String lastDate;
 
-    public Contact(int id, String connectedUser, String contactId, String contactName, String contactServer, String last, String lastDate) {
-        this.id = id;
+    public Contact(String connectedUser, String contactId, String contactName, String contactServer, String last, String lastDate) {
         this.connectedUser = connectedUser;
         this.contactId = contactId;
         this.contactName = contactName;
@@ -31,12 +30,12 @@ public class Contact {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getConnectedUser() {
         return connectedUser;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setConnectedUser(String connectedUser) {

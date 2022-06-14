@@ -10,9 +10,7 @@ import java.util.List;
 @Dao
 public interface ContactDao {
 
-    /**
-     * Create new message.
-     */
+
     @Query("SELECT * FROM contact WHERE connectedUser =:connectedUser")
     List<Contact> index(String connectedUser);
 
