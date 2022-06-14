@@ -32,7 +32,7 @@ public class ApiContactRepository {
     private class ApiContactsListData extends MutableLiveData<List<ApiContact>> {
         public ApiContactsListData() {
             super();
-            List<ApiContact> apiContacts = new LinkedList<>();
+            List<ApiContact> apiContacts = new LinkedList<>();   // liron - change here to room.
             setValue(apiContacts);
         }
 

@@ -1,84 +1,72 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "f35c912043f1a82a8421591cfc0e087c",
+    "version": 5,
+    "identityHash": "bb53361dad1d8ec9b63e6ae57853bf67",
     "entities": [
       {
         "tableName": "Contact",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `connectedUser` TEXT, `contactId` TEXT, `contactName` TEXT, `contactServer` TEXT, `last` TEXT, `lastDate` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contactId` TEXT NOT NULL, `ownerId` TEXT, `pictureId` INTEGER NOT NULL, `lastMessage` TEXT, `lastMessageTime` TEXT, PRIMARY KEY(`contactId`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "connectedUser",
-            "columnName": "connectedUser",
-            "affinity": "TEXT",
-            "notNull": false
-          },
           {
             "fieldPath": "contactId",
             "columnName": "contactId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
-            "fieldPath": "contactName",
-            "columnName": "contactName",
+            "fieldPath": "ownerId",
+            "columnName": "ownerId",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "contactServer",
-            "columnName": "contactServer",
+            "fieldPath": "pictureId",
+            "columnName": "pictureId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastMessage",
+            "columnName": "lastMessage",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "last",
-            "columnName": "last",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "lastDate",
-            "columnName": "lastDate",
+            "fieldPath": "lastMessageTime",
+            "columnName": "lastMessageTime",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "contactId"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "Message",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `connectedUser` TEXT, `contactId` TEXT, `content` TEXT, `created` TEXT, `sent` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`messageId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `created` TEXT, `receiverContact` TEXT, `content` TEXT, `senderUser` TEXT, `sent` INTEGER NOT NULL)",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "messageId",
+            "columnName": "messageId",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "connectedUser",
-            "columnName": "connectedUser",
+            "fieldPath": "created",
+            "columnName": "created",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "contactId",
-            "columnName": "contactId",
+            "fieldPath": "receiverContact",
+            "columnName": "receiverContact",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -89,8 +77,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "created",
-            "columnName": "created",
+            "fieldPath": "senderUser",
+            "columnName": "senderUser",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -103,7 +91,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "messageId"
           ],
           "autoGenerate": true
         },
@@ -111,14 +99,20 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `picture` TEXT, PRIMARY KEY(`userId`))",
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `password` TEXT, `picture` TEXT, PRIMARY KEY(`userId`))",
         "fields": [
           {
             "fieldPath": "userId",
             "columnName": "userId",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "picture",
@@ -140,7 +134,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f35c912043f1a82a8421591cfc0e087c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bb53361dad1d8ec9b63e6ae57853bf67')"
     ]
   }
 }
