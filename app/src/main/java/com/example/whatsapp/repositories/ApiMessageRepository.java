@@ -52,10 +52,10 @@ public class ApiMessageRepository {
 
         @Override
         protected void onActive() {
-            super.onActive();
-            new Thread(() -> {
-                _api.get();
-            }).start();
+//            super.onActive();
+//            new Thread(() -> {
+//                _api.get();
+//            }).start();
 
             new Thread(()->{
                 List<Message> messageList = _messageDao.getMessages(_connectedUser.getId(), _contact.getId());
