@@ -1,6 +1,9 @@
 package com.example.whatsapp.api;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.whatsapp.ContactsActivity;
@@ -34,18 +37,20 @@ public class RegisterApi {
     /**
      * Register method.
      */
-    public void register(User user, AppCompatActivity appCompatActivity) {
+    public void register(User user, Activity appCompatActivity, String encodedImage) {
+
         Call<User> call = _webServiceAPI.Register(user);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.code() == 200) {
+
                     User user = response.body();
                     Intent intent = new Intent(appCompatActivity, ContactsActivity.class);
                     intent.putExtra("username", user.getId());
                     intent.putExtra("password", user.getPassword());
                     intent.putExtra("nickname", user.getNickname());
-                    Users userEntity = new Users(user.getId(), "PICTURE");
+                    Users userEntity = new Users(user.getId(), encodedImage);
                     _usersDao.insertUser(userEntity);
                     appCompatActivity.finish();
                     appCompatActivity.startActivity(intent);
@@ -72,4 +77,6 @@ public class RegisterApi {
             }
         });
     }
+
+
 }
