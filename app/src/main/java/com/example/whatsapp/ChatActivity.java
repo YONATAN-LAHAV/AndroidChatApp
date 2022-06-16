@@ -26,6 +26,7 @@ import com.example.whatsapp.entities.ApiContact;
 import com.example.whatsapp.entities.LoginPostRequest;
 import com.example.whatsapp.entities.MessagePostRequest;
 import com.example.whatsapp.entities.User;
+import com.example.whatsapp.localdb.Users;
 import com.example.whatsapp.localdb.localDatabase;
 import com.example.whatsapp.viewmodels.ApiContactViewModel;
 import com.example.whatsapp.viewmodels.ApiMessageViewModel;
@@ -58,7 +59,12 @@ public class ChatActivity extends AppCompatActivity {
 
         // show user image
         ImageView userImage = findViewById(R.id.ivContactAvatar);
-        String encodedImage = localDatabase.getInstance().usersDao().getUser(_connectedUser.getId()).getPicture();
+        Users user = localDatabase.getInstance().usersDao().getUser(_contact.getId());
+        String encodedImage;
+        if (user == null)
+            encodedImage = localDatabase.getInstance().usersDao().getUser("Default").getPicture();
+        else
+            encodedImage = localDatabase.getInstance().usersDao().getUser(_contact.getId()).getPicture();
         byte[] imageByteArray = Base64.decode(encodedImage, Base64.DEFAULT);
         Bitmap image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
         userImage.setImageBitmap(image);

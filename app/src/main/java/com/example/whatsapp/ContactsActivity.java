@@ -8,13 +8,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.whatsapp.adapters.ApiContactListAdapter;
 import com.example.whatsapp.entities.ApiContact;
 import com.example.whatsapp.entities.LoginPostRequest;
 import com.example.whatsapp.interfaces.ListItemClickListener;
+import com.example.whatsapp.localdb.Users;
+import com.example.whatsapp.localdb.localDatabase;
 import com.example.whatsapp.viewmodels.ApiContactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -38,6 +45,22 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         // Init connected user.
         _connectedUser = new LoginPostRequest(extras.getString("username")
                 , extras.getString("password"));
+
+
+        // show user image
+        ImageView userImage = findViewById(R.id.ivContactAvatar);
+        Users user = localDatabase.getInstance().usersDao().getUser(_connectedUser.getId());
+        String encodedImage;
+        if (user == null)
+            encodedImage = localDatabase.getInstance().usersDao().getUser("Default").getPicture();
+        else
+            encodedImage = localDatabase.getInstance().usersDao().getUser(_connectedUser.getId()).getPicture();
+        byte[] imageByteArray = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
+        userImage.setImageBitmap(image);
+
+        TextView tvContactName = findViewById(R.id.tvContactName);
+        tvContactName.setText(_connectedUser.getId());
 
         // Set button to add new contact screen.
         FloatingActionButton btnToAddContact = findViewById(R.id.btnAddContactScreen);
@@ -70,6 +93,7 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         // Set observer on the data in the viewModel. when viewModel data will change,
         // the method will activate.
         _viewModel.get().observe(this, apiContacts -> {
+            // show user image
             adapter.setContacts(apiContacts);
             //      lstApiContacts.setAdapter(adapter);
         });

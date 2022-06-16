@@ -1,9 +1,13 @@
 package com.example.whatsapp.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.whatsapp.R;
 import com.example.whatsapp.entities.ApiContact;
 import com.example.whatsapp.interfaces.ListItemClickListener;
+import com.example.whatsapp.localdb.Users;
+import com.example.whatsapp.localdb.localDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +54,16 @@ public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAd
             holder.tvName.setText(contact.getName());
             holder.tvLast.setText(contact.getLast());
             holder.tvLastDate.setText(contact.getLastdate());
+
+            Users user = localDatabase.getInstance().usersDao().getUser(contact.getName());
+            String encodedImage;
+            if (user == null)
+                encodedImage = localDatabase.getInstance().usersDao().getUser("Default").getPicture();
+            else
+                encodedImage = localDatabase.getInstance().usersDao().getUser(contact.getName()).getPicture();
+            byte[] imageByteArray = Base64.decode(encodedImage, Base64.DEFAULT);
+            Bitmap image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
+            holder.iv_avatar.setImageBitmap(image);
         }
     }
 
@@ -63,12 +79,14 @@ public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAd
         private final TextView tvName;
         private final TextView tvLast;
         private final TextView tvLastDate;
+        private final ImageView iv_avatar;
 
         public ContactsViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvLast = itemView.findViewById(R.id.tvLast);
             tvLastDate = itemView.findViewById(R.id.tvLastDate);
+            iv_avatar = itemView.findViewById(R.id.iv_avatar);
             itemView.setOnClickListener(this);
         }
 
