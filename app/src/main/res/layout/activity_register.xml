@@ -103,6 +103,17 @@
             android:minHeight="48dp"
             android:padding="10dp" />
 
+        <ImageView
+            android:id="@+id/imageToUpload"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+        <Button
+            android:id="@+id/btnUploadImage"
+            android:text="@string/btnUploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"

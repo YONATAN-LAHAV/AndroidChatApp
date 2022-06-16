@@ -1,6 +1,8 @@
 package com.example.whatsapp.api;
 
+import android.app.Activity;
 import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.whatsapp.ContactsActivity;
@@ -34,22 +36,63 @@ public class RegisterApi {
     /**
      * Register method.
      */
-    public void register(User user, AppCompatActivity appCompatActivity) {
-        Call<User> call = _webServiceAPI.Register(user);
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.code() == 200) {
-                    User user = response.body();
-                    Intent intent = new Intent(appCompatActivity, ContactsActivity.class);
-                    intent.putExtra("username", user.getId());
-                    intent.putExtra("password", user.getPassword());
-                    intent.putExtra("nickname", user.getNickname());
-                    Users userEntity = new Users(user.getId(), "PICTURE");
-                    _usersDao.insertUser(userEntity);
-                    appCompatActivity.finish();
-                    appCompatActivity.startActivity(intent);
-                } else {
+    public void register(User user, Activity appCompatActivity, boolean empty,
+                         boolean invalidPassword, boolean image) {
+        if (empty) {
+            Intent intent = appCompatActivity.getIntent();
+            appCompatActivity.getIntent()
+                    .putExtra("Invalid", "Please fill all fields.");
+            appCompatActivity.finish();
+            appCompatActivity.overridePendingTransition(0, 0);
+            appCompatActivity.startActivity(intent);
+            appCompatActivity.overridePendingTransition(0, 0);
+        } else if (invalidPassword) {
+            Intent intent = appCompatActivity.getIntent();
+            appCompatActivity.getIntent()
+                    .putExtra("Invalid",
+                            "Password and confirm password does not match.");
+            appCompatActivity.finish();
+            appCompatActivity.overridePendingTransition(0, 0);
+            appCompatActivity.startActivity(intent);
+            appCompatActivity.overridePendingTransition(0, 0);
+
+        } else if (!image) {
+            Intent intent = appCompatActivity.getIntent();
+            appCompatActivity.getIntent()
+                    .putExtra("Invalid",
+                            "Upload image.");
+            appCompatActivity.finish();
+            appCompatActivity.overridePendingTransition(0, 0);
+            appCompatActivity.startActivity(intent);
+            appCompatActivity.overridePendingTransition(0, 0);
+        } else {
+            Call<User> call = _webServiceAPI.Register(user);
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.code() == 200) {
+                        User user = response.body();
+                        Intent intent = new Intent(appCompatActivity, ContactsActivity.class);
+                        intent.putExtra("username", user.getId());
+                        intent.putExtra("password", user.getPassword());
+                        intent.putExtra("nickname", user.getNickname());
+                        Users userEntity = new Users(user.getId(), "PICTURE");
+                        _usersDao.insertUser(userEntity);
+                        appCompatActivity.finish();
+                        appCompatActivity.startActivity(intent);
+                    } else {
+                        Intent intent = appCompatActivity.getIntent();
+                        appCompatActivity.getIntent()
+                                .putExtra("Invalid", "Invalid username or password!");
+                        appCompatActivity.finish();
+                        appCompatActivity.overridePendingTransition(0, 0);
+                        appCompatActivity.startActivity(intent);
+                        appCompatActivity.overridePendingTransition(0, 0);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
                     Intent intent = appCompatActivity.getIntent();
                     appCompatActivity.getIntent()
                             .putExtra("Invalid", "Invalid username or password!");
@@ -58,18 +101,8 @@ public class RegisterApi {
                     appCompatActivity.startActivity(intent);
                     appCompatActivity.overridePendingTransition(0, 0);
                 }
-            }
+            });
+        }
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Intent intent = appCompatActivity.getIntent();
-                appCompatActivity.getIntent()
-                        .putExtra("Invalid", "Invalid username or password!");
-                appCompatActivity.finish();
-                appCompatActivity.overridePendingTransition(0, 0);
-                appCompatActivity.startActivity(intent);
-                appCompatActivity.overridePendingTransition(0, 0);
-            }
-        });
     }
 }
