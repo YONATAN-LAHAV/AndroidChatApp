@@ -7,19 +7,31 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.whatsapp.adapters.ApiContactListAdapter;
 import com.example.whatsapp.adapters.ApiMessageListAdapter;
+import com.example.whatsapp.api.RegisterApi;
 import com.example.whatsapp.entities.ApiContact;
 import com.example.whatsapp.entities.LoginPostRequest;
 import com.example.whatsapp.entities.MessagePostRequest;
+import com.example.whatsapp.entities.User;
+import com.example.whatsapp.localdb.localDatabase;
 import com.example.whatsapp.viewmodels.ApiContactViewModel;
 import com.example.whatsapp.viewmodels.ApiMessageViewModel;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -43,6 +55,13 @@ public class ChatActivity extends AppCompatActivity {
                 , extras.getString("ContactServer")
                 , ""
                 , "");
+
+        // show user image
+        ImageView userImage = findViewById(R.id.ivContactAvatar);
+        String encodedImage = localDatabase.getInstance().usersDao().getUser(_connectedUser.getId()).getPicture();
+        byte[] imageByteArray = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
+        userImage.setImageBitmap(image);
 
         // Init top bar (contact card).
         TextView tvContactName = findViewById(R.id.tvContactName);
@@ -84,4 +103,5 @@ public class ChatActivity extends AppCompatActivity {
             lstApiMessages.scrollToPosition(viewModel.get().getValue().size() - 1);
         });
     }
+
 }

@@ -25,17 +25,17 @@
 
             <ImageView
                 android:id="@+id/ivContactAvatar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/ic_avatar" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_avatar"
+                />
 
             <TextView
                 android:id="@+id/tvContactName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center_horizontal"
                 android:textStyle="bold"
                 android:text="TextView" />
         </LinearLayout>
