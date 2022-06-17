@@ -1,6 +1,7 @@
 package com.example.whatsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.room.Room;
 
 import android.app.Activity;
@@ -27,7 +28,7 @@ import com.example.whatsapp.localdb.*;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 1;
     private ActivityRegisterBinding binding;
     private boolean isImageUpload;
@@ -36,7 +37,7 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        setTheme(R.style.Theme_WhatsApp);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -131,8 +132,8 @@ public class RegisterActivity extends Activity {
     private class UploadImage extends AsyncTask<Void, Void, Void> {
         Bitmap image;
         User user;
-        Activity activity;
-        public UploadImage(Bitmap image, Activity activity, User user) {
+        AppCompatActivity activity;
+        public UploadImage(Bitmap image, AppCompatActivity activity, User user) {
             this.image = image;
             this.activity = activity;
             this.user = user;

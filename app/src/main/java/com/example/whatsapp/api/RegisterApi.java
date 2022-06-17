@@ -37,7 +37,7 @@ public class RegisterApi {
     /**
      * Register method.
      */
-    public void register(User user, Activity appCompatActivity, String encodedImage) {
+    public void register(User user, AppCompatActivity appCompatActivity, String encodedImage) {
 
         Call<User> call = _webServiceAPI.Register(user);
         call.enqueue(new Callback<User>() {
