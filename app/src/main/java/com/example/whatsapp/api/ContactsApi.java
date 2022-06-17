@@ -45,7 +45,30 @@ public class ContactsApi {
         call.enqueue(new Callback<List<ApiContact>>() {
             @Override
             public void onResponse(Call<List<ApiContact>> call, Response<List<ApiContact>> response) {
-                _apiContactsLiveData.postValue(response.body());
+                new Thread(() -> {
+                    _apiContactsLiveData.postValue(response.body());
+                }).start();
+
+
+                new Thread(()->{
+
+                    // clear dao from current contacts.
+                    List<Contact> contactList = localDatabase.getInstance().contactDao().index(_connectedUser.getId());
+                    for (Contact contact : contactList) {
+                        localDatabase.getInstance().contactDao().delete(contact);
+                    }
+                    // update dao with server response.
+                    List<ApiContact> apiContactList = response.body();
+                    for (ApiContact contact : apiContactList) {
+                        localDatabase.getInstance().contactDao().insert(new Contact
+                                ( _connectedUser.getId(), contact.getId(), contact.getName(),
+                                        contact.getServer(), contact.getLast(), contact.getLastdate()));
+                    }
+                    _apiContactsLiveData.postValue(apiContactList);
+                }).start();
+
+
+
 //                new Thread(() -> {
 //                    dao.clear();
 //                    dao.insertList(response.body());
