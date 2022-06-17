@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -84,6 +85,20 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         intent.putExtra("ContactName", apiContact.getName());
         intent.putExtra("ContactServer", apiContact.getServer());
         startActivity(intent);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Intent intent = new Intent(this, ContactsAndChatActivity.class);
+            intent.putExtra("username", _connectedUser.getId());
+            intent.putExtra("password", _connectedUser.getPassword());
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        }
     }
 }
 

@@ -25,11 +25,11 @@
         <entry key="..\:/Users/jonat/AndroidStudioProjects/WhatsApp2/app/src/main/res/layout/activity_login.xml" value="0.29421696918531026" />
         <entry key="..\:/Users/jonat/AndroidStudioProjects/WhatsApp2/app/src/main/res/layout/activity_main.xml" value="0.1410859341598974" />
         <entry key="..\:/Users/jonat/AndroidStudioProjects/WhatsApp2/app/src/main/res/layout/activity_register.xml" value="0.22644927536231885" />
-        <entry key="..\:/Users/liron/AndroidStudioProjects/Project/AndroidChatApp/app/src/main/res/layout/activity_chat.xml" value="0.25" />
-        <entry key="..\:/Users/liron/AndroidStudioProjects/Project/AndroidChatApp/app/src/main/res/layout/activity_contacts.xml" value="0.1" />
-        <entry key="..\:/Users/liron/AndroidStudioProjects/Project/AndroidChatApp/app/src/main/res/layout/activity_login.xml" value="0.10833333333333334" />
-        <entry key="..\:/Users/liron/AndroidStudioProjects/Project/AndroidChatApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/liron/AndroidStudioProjects/Project/AndroidChatApp/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Users/jonat/Desktop/AP FINAL/AndroidChatApp/app/src/main/res/drawable/recived_message.xml" value="0.144" />
+        <entry key="..\:/Users/jonat/Desktop/AP FINAL/AndroidChatApp/app/src/main/res/layout/activity_chat.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/jonat/Desktop/AP FINAL/AndroidChatApp/app/src/main/res/layout/activity_contacts.xml" value="0.23958333333333334" />
+        <entry key="..\:/Users/jonat/Desktop/AP FINAL/AndroidChatApp/app/src/main/res/layout/activity_contacts_and_chat.xml" value="0.2" />
+        <entry key="..\:/Users/jonat/Desktop/AP FINAL/AndroidChatApp/app/src/main/res/layout/message_list_item.xml" value="0.264" />
       </map>
     </option>
   </component>

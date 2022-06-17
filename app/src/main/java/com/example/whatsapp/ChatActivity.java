@@ -103,5 +103,4 @@ public class ChatActivity extends AppCompatActivity {
             lstApiMessages.scrollToPosition(viewModel.get().getValue().size() - 1);
         });
     }
-
 }
