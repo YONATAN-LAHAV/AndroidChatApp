@@ -15,9 +15,12 @@ import com.example.whatsapp.localdb.MessageDao;
 import com.example.whatsapp.localdb.localDatabase;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ApiMessageRepository {
     //    private ApiMessageDao dao;
@@ -39,12 +42,13 @@ public class ApiMessageRepository {
         public ApiMessagesListData() {
             super();
             new Thread(()->{
-                List<Message> messageList = _messageDao.getMessages(_connectedUser.getId(), _contact.getId());
+                List<Message> messageList = _messageDao.getConversation(_connectedUser.getId(), _contact.getId());
                 List<ApiMessage> apiMessageList = new LinkedList<>();
                 for (Message message : messageList) {
                     apiMessageList.add( new ApiMessage(message.getContent(), message.getCreated(), message.isSent()));
                 }
                 _apiMessagesListData.postValue(apiMessageList);
+
             }).start();
             List<ApiMessage> apiMessages = new LinkedList<>();
              setValue(apiMessages);
@@ -53,18 +57,8 @@ public class ApiMessageRepository {
         @Override
         protected void onActive() {
             super.onActive();
-            new Thread(() -> {
-                _api.get();
-            }).start();
+            _api.get();
 
-            new Thread(()->{
-                List<Message> messageList = _messageDao.getMessages(_connectedUser.getId(), _contact.getId());
-                List<ApiMessage> apiMessageList = new LinkedList<>();
-                for (Message message : messageList) {
-                    apiMessageList.add( new ApiMessage(message.getContent(), message.getCreated(), message.isSent()));
-                }
-                _apiMessagesListData.postValue(apiMessageList);
-            }).start();
         }
     }
 
