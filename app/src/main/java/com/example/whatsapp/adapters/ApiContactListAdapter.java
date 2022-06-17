@@ -55,12 +55,12 @@ public class ApiContactListAdapter extends RecyclerView.Adapter<ApiContactListAd
             holder.tvLast.setText(contact.getLast());
             holder.tvLastDate.setText(contact.getLastdate());
 
-            Users user = localDatabase.getInstance().usersDao().getUser(contact.getName());
+            Users user = localDatabase.getInstance().usersDao().getUser(contact.getId());
             String encodedImage;
             if (user == null)
                 encodedImage = localDatabase.getInstance().usersDao().getUser("Default").getPicture();
             else
-                encodedImage = localDatabase.getInstance().usersDao().getUser(contact.getName()).getPicture();
+                encodedImage = localDatabase.getInstance().usersDao().getUser(contact.getId()).getPicture();
             byte[] imageByteArray = Base64.decode(encodedImage, Base64.DEFAULT);
             Bitmap image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
             holder.iv_avatar.setImageBitmap(image);
