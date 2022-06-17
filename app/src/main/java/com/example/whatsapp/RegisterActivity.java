@@ -27,7 +27,7 @@ import com.example.whatsapp.localdb.*;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 1;
     private ActivityRegisterBinding binding;
     private boolean isImageUpload;
