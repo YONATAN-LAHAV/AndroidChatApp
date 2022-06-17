@@ -1,6 +1,11 @@
 package com.example.whatsapp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.room.Room;
 
 import android.app.Activity;
@@ -36,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        setTheme(R.style.Theme_WhatsApp);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -54,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
 
 
         //bind to btnRegister.
@@ -104,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             // valid state
             else {
-                Bitmap image = ((BitmapDrawable)binding.imageToUpload.getDrawable()).getBitmap();
+                Bitmap image = ((BitmapDrawable) binding.imageToUpload.getDrawable()).getBitmap();
                 new UploadImage(image, this, user).execute();
             }
         });
@@ -114,25 +118,30 @@ public class RegisterActivity extends AppCompatActivity {
             isImageUpload = false;
             Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+            onResult.launch(galleryIntent);
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-            isImageUpload = true;
-            Uri selectedImage = data.getData();
-            binding.imageToUpload.setImageURI(selectedImage);
-        }
-    }
+    ActivityResultLauncher<Intent> onResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        isImageUpload = true;
+                        Uri selectedImage = result.getData().getData();
+                        binding.imageToUpload.setImageURI(selectedImage);
+                    }
+                }
+            });
+
 
     private class UploadImage extends AsyncTask<Void, Void, Void> {
         Bitmap image;
         User user;
-        Activity activity;
-        public UploadImage(Bitmap image, Activity activity, User user) {
+        AppCompatActivity activity;
+
+        public UploadImage(Bitmap image, AppCompatActivity activity, User user) {
             this.image = image;
             this.activity = activity;
             this.user = user;

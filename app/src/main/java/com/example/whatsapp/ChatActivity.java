@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -57,6 +59,18 @@ public class ChatActivity extends AppCompatActivity {
                 , ""
                 , "");
 
+        // check orientation.
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Intent intent = new Intent(this, ContactsAndChatActivity.class);
+            intent.putExtra("username", _connectedUser.getId());
+            intent.putExtra("password", _connectedUser.getPassword());
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+            finish();
+            overridePendingTransition(0, 0);
+        }
+
         // show user image
         ImageView userImage = findViewById(R.id.ivContactAvatar);
         Users user = localDatabase.getInstance().usersDao().getUser(_contact.getId());
@@ -93,6 +107,7 @@ public class ChatActivity extends AppCompatActivity {
         // the method will activate.
         viewModel.get().observe(this, apiMessages -> {
             adapter.setMessages(apiMessages);
+            lstApiMessages.scrollToPosition(viewModel.get().getValue().size() - 1);
         });
 
         Button btnSend = findViewById(R.id.btnSend);
@@ -104,10 +119,24 @@ public class ChatActivity extends AppCompatActivity {
             try {
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                etNewMessage.getText().clear();
             } catch (Exception e) {
             }
             lstApiMessages.scrollToPosition(viewModel.get().getValue().size() - 1);
         });
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Intent intent = new Intent(this, ContactsAndChatActivity.class);
+            intent.putExtra("username", _connectedUser.getId());
+            intent.putExtra("password", _connectedUser.getPassword());
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        }
+    }
 }
