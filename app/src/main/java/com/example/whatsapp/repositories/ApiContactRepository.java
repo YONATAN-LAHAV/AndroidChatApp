@@ -44,15 +44,13 @@ public class ApiContactRepository {
                 }
                 postValue(apiContactList);
             }).start();
-            //List<ApiContact> apiContacts = new LinkedList<>();
-            //setValue(apiContacts);
         }
 
         @Override
         protected void onActive() {
             super.onActive();
-
-            new Thread(() -> {
+            _api.get();
+          /*  new Thread(() -> {
                 _api.get();
             }).start();
 
@@ -64,7 +62,7 @@ public class ApiContactRepository {
                             contact.getContactServer(), contact.getLast(), contact.getLastDate()));
                 }
                 _apiContactsListData.postValue(apiContactList);
-            }).start();
+            }).start();*/
         }
     }
 
