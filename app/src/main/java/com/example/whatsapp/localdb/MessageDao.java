@@ -23,6 +23,9 @@ public interface MessageDao {
     @Query("SELECT * FROM message WHERE connectedUser =:connectedUser AND contactId =:contactId")
     List<Message> getMessages(String connectedUser, String contactId);
 
+    @Query("SELECT * FROM message WHERE connectedUser =:connectedUser AND contactId =:contactId OR connectedUser =:contactId AND contactId =:connectedUser")
+    List<Message> getConversation(String connectedUser, String contactId);
+
     /**
      * Create new message.
      */

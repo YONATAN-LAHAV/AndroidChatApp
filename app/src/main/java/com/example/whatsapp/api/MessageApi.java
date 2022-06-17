@@ -14,6 +14,7 @@ import com.example.whatsapp.localdb.Contact;
 import com.example.whatsapp.localdb.Message;
 import com.example.whatsapp.localdb.localDatabase;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -51,7 +52,39 @@ public class MessageApi {
         call.enqueue(new Callback<List<ApiMessage>>() {
             @Override
             public void onResponse(Call<List<ApiMessage>> call, Response<List<ApiMessage>> response) {
-                _apiMessagesListData.postValue(response.body());
+                //_apiMessagesListData.postValue(response.body());
+
+                new Thread(()->{
+                    _apiMessagesListData.postValue(response.body());
+                }).start();
+
+                new Thread(()->{
+
+                    // clear dao from current conversation.
+                    List<Message> messageList = localDatabase.getInstance().messageDao().getMessages(_connectedUser.getId(), _contact.getId());
+                    for (Message message : messageList) {
+                        localDatabase.getInstance().messageDao().deleteMessage(message);
+                    }
+                    List<Message> messageList2 = localDatabase.getInstance().messageDao().getMessages(_contact.getId(), _connectedUser.getId());
+                    for (Message message : messageList2) {
+                        localDatabase.getInstance().messageDao().deleteMessage(message);
+                    }
+
+                    // update dao with server response.
+                    List<ApiMessage> apiMessageList = response.body();
+                    for (ApiMessage message : apiMessageList) {
+                        if (message.is_sent() == true) {
+                            localDatabase.getInstance().messageDao().insertMessage(new Message(_connectedUser.getId(),
+                                    _contact.getId(), message.get_content(), message.get_created(), true));
+                        }
+                        else {
+                            localDatabase.getInstance().messageDao().insertMessage(new Message(_contact.getId(),
+                                    _connectedUser.getId(), message.get_content(), message.get_created(), false));
+                        }
+
+                    }
+                    _apiMessagesListData.postValue(apiMessageList);
+                }).start();
             }
 
             @Override
