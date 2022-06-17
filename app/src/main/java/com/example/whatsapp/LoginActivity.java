@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.whatsapp.api.LoginApi;
 import com.example.whatsapp.localdb.Users;
 import com.example.whatsapp.localdb.localDatabase;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 public class LoginActivity extends AppCompatActivity {
@@ -59,6 +60,13 @@ public class LoginActivity extends AppCompatActivity {
         Button btnToRegister = findViewById(R.id.btnToRegister);
         btnToRegister.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+        });
+
+        // Go to settings.
+        FloatingActionButton btnSettings = findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         });
     }
