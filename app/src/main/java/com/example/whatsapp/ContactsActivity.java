@@ -40,6 +40,7 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
+
         // Get extras and create LoginPostRequest object to pass the connected user.
         Bundle extras = getIntent().getExtras();
 
@@ -47,6 +48,17 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         _connectedUser = new LoginPostRequest(extras.getString("username")
                 , extras.getString("password"));
 
+        // check orientation.
+        int orientation = getResources().getConfiguration().orientation;
+        if(orientation== Configuration.ORIENTATION_LANDSCAPE){
+            Intent intent = new Intent(this, ContactsAndChatActivity.class);
+            intent.putExtra("username", _connectedUser.getId());
+            intent.putExtra("password", _connectedUser.getPassword());
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+            finish();
+            overridePendingTransition(0, 0);
+        }
 
         // show user image
         ImageView userImage = findViewById(R.id.ivContactAvatar);
@@ -87,7 +99,6 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
         RecyclerView lstApiContacts = findViewById(R.id.lstApiContacts);
         final ApiContactListAdapter adapter = new ApiContactListAdapter(this, this);
         lstApiContacts.setLayoutManager(new LinearLayoutManager(this));
-
         lstApiContacts.setClickable(true);
         lstApiContacts.setAdapter(adapter);
 

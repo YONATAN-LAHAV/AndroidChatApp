@@ -21,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.whatsapp.adapters.ApiContactListAdapter;
@@ -48,12 +49,18 @@ public class ContactsAndChatActivity extends AppCompatActivity implements ListIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_and_chat);
 
+
         // Get extras and create LoginPostRequest object to pass the connected user.
         Bundle extras = getIntent().getExtras();
+
+        //
+        // Contacts side.
+        //
 
         // Init connected user.
         _connectedUser = new LoginPostRequest(extras.getString("username")
                 , extras.getString("password"));
+
         // Set button to add new contact screen.
         FloatingActionButton btnToAddContact = findViewById(R.id.btnAddContactScreen);
         btnToAddContact.setOnClickListener(view -> {
@@ -63,7 +70,7 @@ public class ContactsAndChatActivity extends AppCompatActivity implements ListIt
             intent.putExtra("nickname", extras.getString("nickname"));
             startActivity(intent);
         });
-        // Init _viewModel _apiContactViewModel.
+        // Init _viewModel field.
         ViewModelProvider.Factory factoryContacts = new ViewModelProvider.Factory() {
             @NonNull
             @Override
@@ -72,57 +79,58 @@ public class ContactsAndChatActivity extends AppCompatActivity implements ListIt
             }
         };
         _apiContactViewModel = new ViewModelProvider(this, factoryContacts).get(ApiContactViewModel.class);
-
         // RecycleView Contacts logic.
         RecyclerView lstApiContacts = findViewById(R.id.lstApiContacts);
         final ApiContactListAdapter apiContactListAdapter = new ApiContactListAdapter(this, this);
         lstApiContacts.setLayoutManager(new LinearLayoutManager(this));
-
         lstApiContacts.setClickable(true);
         lstApiContacts.setAdapter(apiContactListAdapter);
-
+        // Set observer on the data in the viewModel. when viewModel data will change,
+        // the method will activate.
         _apiContactViewModel.get().observe(this, apiContacts -> {
+            // show user image
             apiContactListAdapter.setContacts(apiContacts);
-            //      lstApiContacts.setAdapter(apiContactListAdapter);
+            //      lstApiContacts.setAdapter(adapter);
         });
 
-        // Chat side.
+        //
+        // Chat Side.
+        //
         // Init contact field.
-        if (extras.getString("ContactUsername") != null) {
-            ConstraintLayout constraintLayout = findViewById(R.id.chat_side);
-            constraintLayout.setVisibility(ConstraintLayout.VISIBLE);
+        String contactUsername = extras.getString("ContactUsername");
+        if (contactUsername != null) {
             _contact = new ApiContact(extras.getString("ContactUsername")
                     , extras.getString("ContactName")
                     , extras.getString("ContactServer")
                     , ""
                     , "");
-
-            // Show user image
+            LinearLayout chatSide = findViewById(R.id.chat_side);
+            chatSide.setVisibility(LinearLayout.VISIBLE);
+            // show user image
             ImageView userImage = findViewById(R.id.ivContactAvatar);
-            Users contact = localDatabase.getInstance().usersDao().getUser(_connectedUser.getId());
-            if (contact == null)
-                userImage.setImageDrawable(getDrawable(R.drawable.ic_avatar));
-            else {
-                String encodedImage = contact.getPicture();
-                byte[] imageByteArray = Base64.decode(encodedImage, Base64.DEFAULT);
-                Bitmap image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
-                userImage.setImageBitmap(image);
-            }
-
+            Users user = localDatabase.getInstance().usersDao().getUser(_contact.getId());
+            String encodedImage;
+            if (user == null)
+                encodedImage = localDatabase.getInstance().usersDao().getUser("Default").getPicture();
+            else
+                encodedImage = localDatabase.getInstance().usersDao().getUser(_contact.getId()).getPicture();
+            byte[] imageByteArray = Base64.decode(encodedImage, Base64.DEFAULT);
+            Bitmap image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
+            userImage.setImageBitmap(image);
 
             // Init top bar (contact card).
             TextView tvContactName = findViewById(R.id.tvContactName);
             tvContactName.setText(_contact.getName());
 
             // Init _viewModel field.
-            ViewModelProvider.Factory factory = new ViewModelProvider.Factory() {
+            ViewModelProvider.Factory factoryChat = new ViewModelProvider.Factory() {
                 @NonNull
                 @Override
                 public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
                     return (T) new ApiMessageViewModel(_connectedUser, _contact);
                 }
             };
-            _apiMessageViewModel = new ViewModelProvider(this, factory).get(ApiMessageViewModel.class);
+            _apiMessageViewModel = new ViewModelProvider(this, factoryChat).get(ApiMessageViewModel.class);
 
             // RecycleView logic.
             RecyclerView lstApiMessages = findViewById(R.id.lstApiMessages);
@@ -134,6 +142,7 @@ public class ContactsAndChatActivity extends AppCompatActivity implements ListIt
             // the method will activate.
             _apiMessageViewModel.get().observe(this, apiMessages -> {
                 apiMessageListAdapter.setMessages(apiMessages);
+                lstApiMessages.scrollToPosition(_apiMessageViewModel.get().getValue().size() - 1);
             });
 
             Button btnSend = findViewById(R.id.btnSend);
@@ -145,10 +154,24 @@ public class ContactsAndChatActivity extends AppCompatActivity implements ListIt
                 try {
                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    etNewMessage.getText().clear();
                 } catch (Exception e) {
                 }
                 lstApiMessages.scrollToPosition(_apiMessageViewModel.get().getValue().size() - 1);
             });
+        } else {
+            _contact = new ApiContact("", "", "", "", "");
+        }
+        // Check orientation.
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Intent intent = new Intent(this, ContactsActivity.class);
+            intent.putExtra("username", _connectedUser.getId());
+            intent.putExtra("password", _connectedUser.getPassword());
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+            finish();
+            overridePendingTransition(0, 0);
         }
     }
 
