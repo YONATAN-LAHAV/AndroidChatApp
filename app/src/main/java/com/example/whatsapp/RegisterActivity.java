@@ -28,6 +28,7 @@ import com.example.whatsapp.api.RegisterApi;
 import com.example.whatsapp.databinding.ActivityRegisterBinding;
 import com.example.whatsapp.entities.User;
 import com.example.whatsapp.localdb.*;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
@@ -37,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 1;
     private ActivityRegisterBinding binding;
     private boolean isImageUpload;
+    private String newToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,15 @@ public class RegisterActivity extends AppCompatActivity {
         setTheme(R.style.Theme_WhatsApp);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+        // Firebase token.
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+                RegisterActivity.this, instanceIdResult -> {
+                    newToken = instanceIdResult.getToken();
+                }
+        );
+
 
         // Validation message.
         Bundle extras = getIntent().getExtras();
@@ -167,8 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
             // Create RegisterApi object.
             RegisterApi api = new RegisterApi(localDatabase.getInstance().usersDao());
 
-            // Send request to server and update room.
-            api.register(user, activity, encodedImage);
+            api.register(user, activity, encodedImage, newToken);
             return null;
 
         }

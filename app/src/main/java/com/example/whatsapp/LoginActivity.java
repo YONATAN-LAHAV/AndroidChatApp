@@ -15,16 +15,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 public class LoginActivity extends AppCompatActivity {
+    private String newToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         // Firebase token.
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
                 LoginActivity.this, instanceIdResult -> {
-                    String newToken = instanceIdResult.getToken();
+                    newToken = instanceIdResult.getToken();
                 }
         );
 
@@ -52,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             EditText etPassword = findViewById(R.id.etPassword);
             String username = etUsername.getText().toString();
             String password = etPassword.getText().toString();
-            api.login(username, password, this);
+            api.login(username, password, this, newToken);
         });
 
 

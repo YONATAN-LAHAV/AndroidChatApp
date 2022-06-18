@@ -33,7 +33,7 @@ public class LoginApi {
     /**
      * Login method.
      */
-    public void login(String username, String password, AppCompatActivity appCompatActivity) {
+    public void login(String username, String password, AppCompatActivity appCompatActivity, String newToken) {
         Call<User> call = _webServiceAPI.Login(new LoginPostRequest(username, password));
         call.enqueue(new Callback<User>() {
 
@@ -45,6 +45,7 @@ public class LoginApi {
                     intent.putExtra("username", user.getId());
                     intent.putExtra("password", user.getPassword());
                     intent.putExtra("nickname", user.getNickname());
+                    token(username, newToken, appCompatActivity);
                     appCompatActivity.finish();
                     appCompatActivity.startActivity(intent);
                 } else {
@@ -60,6 +61,25 @@ public class LoginApi {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    /**
+     * token method.
+     */
+    public void token(String username, String token, AppCompatActivity appCompatActivity) {
+        Call<String> call = _webServiceAPI.UpdateToken(new LoginPostRequest(username, token));
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String name = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
 
             }
         });

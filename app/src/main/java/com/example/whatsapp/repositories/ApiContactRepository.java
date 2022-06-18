@@ -50,19 +50,6 @@ public class ApiContactRepository {
         protected void onActive() {
             super.onActive();
             _api.get();
-          /*  new Thread(() -> {
-                _api.get();
-            }).start();
-
-            new Thread(()->{
-                List<Contact> contactList = _contactDao.index(_connectedUser.getId());
-                List<ApiContact> apiContactList = new LinkedList<>();
-                for (Contact contact : contactList) {
-                    apiContactList.add( new ApiContact(contact.getContactId(), contact.getContactName(),
-                            contact.getContactServer(), contact.getLast(), contact.getLastDate()));
-                }
-                _apiContactsListData.postValue(apiContactList);
-            }).start();*/
         }
     }
 

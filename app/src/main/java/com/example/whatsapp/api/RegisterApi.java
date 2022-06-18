@@ -37,7 +37,7 @@ public class RegisterApi {
     /**
      * Register method.
      */
-    public void register(User user, AppCompatActivity appCompatActivity, String encodedImage) {
+    public void register(User user, AppCompatActivity appCompatActivity, String encodedImage, String newToken) {
 
         Call<User> call = _webServiceAPI.Register(user);
         call.enqueue(new Callback<User>() {
@@ -52,6 +52,7 @@ public class RegisterApi {
                     intent.putExtra("nickname", user.getNickname());
                     Users userEntity = new Users(user.getId(), encodedImage);
                     _usersDao.insertUser(userEntity);
+                    token(user.getId(), newToken, appCompatActivity);
                     appCompatActivity.finish();
                     appCompatActivity.startActivity(intent);
                 } else {
@@ -74,6 +75,25 @@ public class RegisterApi {
                 appCompatActivity.overridePendingTransition(0, 0);
                 appCompatActivity.startActivity(intent);
                 appCompatActivity.overridePendingTransition(0, 0);
+            }
+
+        });
+    }
+
+    /**
+     * token method.
+     */
+    public void token(String username, String token, AppCompatActivity appCompatActivity) {
+        Call<String> call = _webServiceAPI.UpdateToken(new LoginPostRequest(username, token));
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String name = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
             }
         });
     }
