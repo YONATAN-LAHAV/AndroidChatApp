@@ -33,7 +33,6 @@ public class WhatsAppService extends FirebaseMessagingService {
 
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
             notificationManagerCompat.notify(1, builder.build());
-
         }
     }
 
