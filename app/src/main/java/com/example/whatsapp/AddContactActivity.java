@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.example.whatsapp.entities.ApiContact;
 import com.example.whatsapp.entities.ContactsPostRequest;
 import com.example.whatsapp.entities.LoginPostRequest;
 import com.example.whatsapp.viewmodels.ApiContactViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AddContactActivity extends AppCompatActivity {
 
@@ -53,6 +55,13 @@ public class AddContactActivity extends AppCompatActivity {
                             , etAddContacNickname.getText().toString()
                             , etAddContactServer.getText().toString())
                     , this);
+        });
+
+        // Go to settings.
+        FloatingActionButton btnSettings = findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         });
     }
 }

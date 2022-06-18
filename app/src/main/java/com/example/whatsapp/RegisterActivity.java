@@ -29,6 +29,7 @@ import com.example.whatsapp.databinding.ActivityRegisterBinding;
 import com.example.whatsapp.entities.User;
 import com.example.whatsapp.localdb.*;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -131,6 +132,14 @@ public class RegisterActivity extends AppCompatActivity {
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             onResult.launch(galleryIntent);
         });
+
+
+        // Go to settings.
+        FloatingActionButton btnSettings = findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        });
     }
 
     ActivityResultLauncher<Intent> onResult = registerForActivityResult(
@@ -171,6 +180,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             api.register(user, activity, encodedImage, newToken);
             return null;
+
         }
 
         @Override

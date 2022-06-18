@@ -83,7 +83,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_margin="10dp"
-                    android:src="@drawable/ic_light"
+                    android:src="@drawable/ic_dark"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageButton

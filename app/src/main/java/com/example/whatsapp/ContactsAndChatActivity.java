@@ -173,6 +173,12 @@ public class ContactsAndChatActivity extends AppCompatActivity implements ListIt
             finish();
             overridePendingTransition(0, 0);
         }
+        // Go to settings.
+        FloatingActionButton btnSettings = findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override

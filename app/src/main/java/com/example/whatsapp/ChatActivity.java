@@ -32,6 +32,7 @@ import com.example.whatsapp.localdb.Users;
 import com.example.whatsapp.localdb.localDatabase;
 import com.example.whatsapp.viewmodels.ApiContactViewModel;
 import com.example.whatsapp.viewmodels.ApiMessageViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -123,6 +124,13 @@ public class ChatActivity extends AppCompatActivity {
             } catch (Exception e) {
             }
             lstApiMessages.scrollToPosition(viewModel.get().getValue().size() - 1);
+        });
+
+        // Go to settings.
+        FloatingActionButton btnSettings = findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         });
     }
 
