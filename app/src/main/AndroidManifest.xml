@@ -19,12 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsApp"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31"
-        android:largeHeap="true"
-        android:hardwareAccelerated="false">
-        <activity
-            android:name=".SettingsActivity"
-            android:exported="false" />
+        tools:targetApi="31">
+
         <service
             android:name=".WhatsAppService"
             android:enabled="true"
