@@ -28,6 +28,7 @@ import com.example.whatsapp.api.RegisterApi;
 import com.example.whatsapp.databinding.ActivityRegisterBinding;
 import com.example.whatsapp.entities.User;
 import com.example.whatsapp.localdb.*;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -120,6 +121,14 @@ public class RegisterActivity extends AppCompatActivity {
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             onResult.launch(galleryIntent);
         });
+
+
+        // Go to settings.
+        FloatingActionButton btnSettings = findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        });
     }
 
     ActivityResultLauncher<Intent> onResult = registerForActivityResult(
@@ -161,6 +170,7 @@ public class RegisterActivity extends AppCompatActivity {
             // Send request to server and update room.
             api.register(user, activity, encodedImage);
             return null;
+
         }
 
         @Override

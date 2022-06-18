@@ -20,10 +20,6 @@
         android:theme="@style/Theme.WhatsApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".SettingsActivity"
-            android:exported="false" />
-
         <service
             android:name=".WhatsAppService"
             android:enabled="true"
@@ -33,6 +29,11 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".SettingsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="sensor" />
         <activity
             android:name=".ContactsAndChatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

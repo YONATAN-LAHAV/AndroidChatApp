@@ -50,7 +50,7 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
 
         // check orientation.
         int orientation = getResources().getConfiguration().orientation;
-        if(orientation== Configuration.ORIENTATION_LANDSCAPE){
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Intent intent = new Intent(this, ContactsAndChatActivity.class);
             intent.putExtra("username", _connectedUser.getId());
             intent.putExtra("password", _connectedUser.getPassword());
@@ -108,6 +108,13 @@ public class ContactsActivity extends AppCompatActivity implements ListItemClick
             // show user image
             adapter.setContacts(apiContacts);
             //      lstApiContacts.setAdapter(adapter);
+        });
+
+        // Go to settings.
+        FloatingActionButton btnSettings = findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         });
     }
 
