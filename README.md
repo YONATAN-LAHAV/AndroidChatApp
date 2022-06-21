@@ -15,6 +15,9 @@ In order to use our app, follow the next simple steps:
   - 2 phones
   -  phone and browser.
   Once you did it, you can add a new contact to your chat and write them messages.
+  
+3)for react clients:
+Clone repository : ___________________________________________________________________
 
 NOTE:
 - if you are register from the android app, you have to choose profile picture, it will be display only in the phone, as required
@@ -26,3 +29,4 @@ When you add a new contact - you need to supply:
 - original contacts username.
 - nickname that you want for this contacts.
 - servar. ( please insert 10.0.2.2: insted og localhost)
+
