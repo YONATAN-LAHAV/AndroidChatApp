@@ -13,7 +13,7 @@ In order to use our app, follow the next simple steps:
   In order to check our app, register ant then and log in from at least 2 users, you can use:
   - 2 different browsers
   - 2 phones
-  -  phone and browser.
+  - phone and browser.
   Once you did it, you can add a new contact to your chat and write them messages.
   
 3)for react clients:
