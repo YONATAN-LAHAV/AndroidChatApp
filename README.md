@@ -17,7 +17,7 @@ In order to use our app, follow the next simple steps:
   Once you did it, you can add a new contact to your chat and write them messages.
   
 3)for react clients:
-Clone repository : ___________________________________________________________________
+Clone repository : https://github.com/LironBalastra/React-client
 
 NOTE:
 - if you are register from the android app, you have to choose profile picture, it will be display only in the phone, as required
