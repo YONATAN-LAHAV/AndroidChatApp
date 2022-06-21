@@ -28,5 +28,5 @@ NOTE:
 When you add a new contact - you need to supply:
 - original contacts username.
 - nickname that you want for this contacts.
-- servar. ( please insert 10.0.2.2: insted og localhost)
+- servar. ( please insert 10.0.2.2: insted oF localhost)
 
